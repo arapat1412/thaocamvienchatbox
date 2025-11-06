@@ -151,6 +151,9 @@
 <a href="#map-section" class="relative px-4 text-slate-700 font-medium hover:text-green-600 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-green-600 after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center hover:after:scale-x-100 hover:-translate-y-0.5 transition-transform" data-i18n="nav_map">Bản Đồ</a>
 <a href="#attractions" class="relative px-4 text-slate-700 font-medium hover:text-green-600 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-green-600 after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center hover:after:scale-x-100 hover:-translate-y-0.5 transition-transform" data-i18n="nav_areas">Khu Vực</a>
 <a href="#news-section" class="relative px-4 text-slate-700 font-medium hover:text-green-600 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-green-600 after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center hover:after:scale-x-100 hover:-translate-y-0.5 transition-transform" data-i18n="nav_news">Tin Tức</a>
+    <a href="#page-conservation" class="page-link relative px-4 text-slate-700 font-medium hover:text-green-600 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-green-600 after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center hover:after:scale-x-100 hover:-translate-y-0.5 transition-transform" data-i18n="nav_conservation">Bảo Tồn</a>
+<a href="#page-events" class="page-link relative px-4 text-slate-700 font-medium hover:text-green-600 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-green-600 after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center hover:after:scale-x-100 hover:-translate-y-0.5 transition-transform" data-i18n="nav_events">Lịch Sự Kiện</a>
+
     <a href="tel:0915877373" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition duration-300 text-sm hover:-translate-y-1" data-i18n="nav_buy_ticket">
     Mua vé
 </a>
@@ -167,6 +170,8 @@
     <a href="#map-section" class="block px-6 py-4 text-slate-700 font-medium hover:bg-slate-100" data-i18n="nav_map_mobile">Bản Đồ Tương Tác</a>
     <a href="#attractions" class="block px-6 py-4 text-slate-700 font-medium hover:bg-slate-100" data-i18n="nav_areas">Khu Vực</a>
     <a href="#news-section" class="block px-6 py-4 text-slate-700 font-medium hover:bg-slate-100" data-i18n="nav_news">Tin Tức</a>
+    <a href="#page-conservation" class="page-link block px-6 py-4 text-slate-700 font-medium hover:bg-slate-100" data-i18n="nav_conservation">Bảo Tồn</a>
+    <a href="#page-events" class="page-link block px-6 py-4 text-slate-700 font-medium hover:bg-slate-100" data-i18n="nav_events">Lịch Sự Kiện</a>
     <a href="tel:0915877373" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition duration-300 text-sm hover:-translate-y-1" data-i18n="nav_buy_ticket">
     Mua vé
 </a>
@@ -506,6 +511,198 @@
     <footer class="bg-green-800 ...">
                 </main>
 </div>
+<div id="page-events" class="hidden bg-slate-50">
+    <main class="container mx-auto px-6 py-16">
+        
+        <button id="back-to-home-events" class="home-link mb-8 inline-flex items-center text-green-600 font-semibold hover:text-green-800 transition" data-i18n="hi2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg >
+            Quay lại Trang chủ
+        </button>
+        
+        <div class="text-center mb-12">
+            <h1 class="text-4xl lg:text-5xl font-bold text-slate-900 mb-4" data-i18n="events_title">Lịch Sự Kiện & Biểu Diễn</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto" data-i18n="events_desc">Đừng bỏ lỡ những hoạt động hấp dẫn và các màn trình diễn đặc sắc chỉ có tại Thảo Cầm Viên!</p>
+        </div>
+
+        <div class="relative max-w-3xl mx-auto">
+            
+            <div class="absolute left-1/2 w-1 bg-green-200 h-full -translate-x-1/2"></div>
+
+            <div class="relative mb-12 fade-in-element">
+                <div class="relative z-10 w-full flex items-center">
+                    <div class="w-1/2 pr-8 text-right">
+                        <div class="bg-white p-4 rounded-lg shadow-lg border-l-4 border-orange-400">
+                            <div class="text-sm font-semibold text-orange-600" data-i18n="events_weekend_only">Chỉ cuối tuần</div>
+                            <h3 class="text-xl font-bold text-slate-800" data-i18n="event_1_time">9:00 - 11:00 & 14:00 - 16:00</h3>
+                        </div>
+                    </div>
+                    <div class="absolute left-1/2 -translate-x-1/2 z-20">
+                        <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white shadow-xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 10.648a.848.848 0 0 0-.018-1.31m-5.842 4.11a3.75 3.75 0 1 1-5.303-5.303 3.75 3.75 0 0 1 5.303 5.303Zm-9.341 4.135a.848.848 0 0 0 1.178 1.178l3.198-3.197a.848.848 0 0 0-1.178-1.178l-3.198 3.197Zm3.264-5.082a.848.848 0 0 0 1.31.018l5.842-4.11a.848.848 0 0 0-1.31-.018l-5.842 4.11Z" />
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M12.462 3.314a.848.848 0 0 1-.29 1.170l-4.11 2.92a.848.848 0 0 1-1.17-.29l-2.92-4.11a.848.848 0 0 1 .29-1.17l4.11-2.92a.848.848 0 0 1 1.17.29l2.92 4.11Z" />
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.28 9.72 4.11-2.92a.848.848 0 0 1 1.17.29l2.92 4.11a.848.848 0 0 1-.29 1.17l-4.11 2.92a.848.848 0 0 1-1.17-.29l-2.92-4.11Z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="w-1/2 pl-8">
+                        <div class="bg-white p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
+                            <h2 class="text-2xl font-semibold text-slate-900 mb-2" data-i18n="event_1_title">Tương Tác Vườn Thú Thiếu Nhi</h2>
+                            <p class="text-slate-600 mb-3" data-i18n="event_1_desc">Cơ hội tuyệt vời để các bé làm quen và tương tác với các bạn dê, cừu thân thiện.</p>
+                            <div class="text-sm font-medium text-green-700" data-i18n="event_1_loc">Địa điểm: Vườn Thú Thiếu Nhi</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative mb-12 fade-in-element">
+                <div class="relative z-10 w-full flex items-center">
+                    <div class="w-1/2 pr-8">
+                         <div class="bg-white p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
+                            <h2 class="text-2xl font-semibold text-slate-900 mb-2" data-i18n="event_2_title">Show Xiếc & Ảo Thuật Đặc Sắc</h2>
+                            <p class="text-slate-600 mb-3" data-i18n="event_2_desc">Thưởng thức các màn trình diễn vui nhộn, hấp dẫn từ các nghệ sĩ tài ba.</p>
+                            <div class="text-sm font-medium text-green-700" data-i18n="event_2_loc">Địa điểm: Sân khấu chính</div>
+                        </div>
+                    </div>
+                    <div class="absolute left-1/2 -translate-x-1/2 z-20">
+                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white shadow-xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.31h5.404a.562.562 0 0 1 .31.96l-4.372 3.14a.563.563 0 0 0-.182.635l1.644 5.051a.563.563 0 0 1-.81.63l-4.425-2.836a.563.563 0 0 0-.66 0l-4.425 2.836a.563.563 0 0 1-.81-.63l1.644-5.051a.563.563 0 0 0-.182-.635L2.54 9.871a.562.562 0 0 1 .31-.96h5.404a.563.563 0 0 0 .475-.31L11.48 3.5Z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="w-1/2 pl-8 text-left">
+                        <div class="bg-white p-4 rounded-lg shadow-lg border-r-4 border-blue-400">
+                            <div class="text-sm font-semibold text-blue-600" data-i18n="events_weekend_only">Chỉ cuối tuần</div>
+                            <h3 class="text-xl font-bold text-slate-800" data-i18n="event_2_time">10:30 - 12:30 & 14:00 - 16:00</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative mb-12 fade-in-element">
+                <div class="relative z-10 w-full flex items-center">
+                    <div class="w-1/2 pr-8 text-right">
+                        <div class="bg-white p-4 rounded-lg shadow-lg border-l-4 border-green-400">
+                            <div class="text-sm font-semibold text-green-600" data-i18n="events_all_day">Cả ngày</div>
+                            <h3 class="text-xl font-bold text-slate-800" data-i18n="event_3_time">8:00 - 17:00</h3>
+                        </div>
+                    </div>
+                    <div class="absolute left-1/2 -translate-x-1/2 z-20">
+                        <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white shadow-xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="w-1/2 pl-8">
+                         <div class="bg-white p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
+                            <h2 class="text-2xl font-semibold text-slate-900 mb-2" data-i18n="event_3_title">Tham Quan Bảo Tàng Động-Thực Vật</h2>
+                            <p class="text-slate-600 mb-3" data-i18n="event_3_desc">Khám phá bộ sưu tập mẫu vật đa dạng và tìm hiểu về lịch sử tự nhiên.</p>
+                            <div class="text-sm font-medium text-green-700" data-i18n="event_3_loc">Địa điểm: Bảo Tàng (Cạnh cổng chính)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        
+    </main>
+</div>
+<div id="page-conservation" class="hidden bg-white">
+    <section class="relative h-[50vh] min-h-[300px] text-white">
+        <div class="absolute inset-0">
+            <img src="/image/baotonthu.jpg" alt="Bảo tồn động vật" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/50"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 h-full flex flex-col justify-center relative z-10">
+            <h1 class="text-4xl lg:text-5xl font-bold mb-4" data-i18n="conserve_title">Chung Tay Bảo Tồn</h1>
+            <p class="text-lg lg:text-xl text-gray-200 max-w-2xl" data-i18n="conserve_desc">
+                Sứ mệnh của chúng tôi là bảo vệ, nhân giống và cứu hộ các loài động vật quý hiếm, góp phần gìn giữ đa dạng sinh học cho các thế hệ tương lai.
+            </p>
+        </div>
+    </section>
+
+    <main class="container mx-auto px-6 py-16">
+        
+        <button id="back-to-home-conservation" class="home-link mb-12 inline-flex items-center text-green-600 font-semibold hover:text-green-800 transition" data-i18n="hi2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg >
+            Quay lại Trang chủ
+        </button>
+        
+        <section class="max-w-4xl mx-auto mb-16 fade-in-element">
+            <h2 class="text-3xl font-bold text-slate-900 text-center mb-6" data-i18n="conserve_why_title">Tại Sao Bảo Tồn Lại Quan Trọng?</h2>
+            <div class="text-lg text-slate-700 leading-relaxed space-y-4">
+                <p data-i18n="conserve_why_desc_1">
+                    Mỗi loài động vật là một mắt xích không thể thiếu trong hệ sinh thái. Khi một loài biến mất, sự cân bằng của tự nhiên bị đe dọa. Thảo Cầm Viên không chỉ là nơi tham quan, mà còn là ngôi nhà an toàn, nơi cứu hộ và chữa trị cho các cá thể bị thương, và là trung tâm nhân giống các loài quý hiếm như Voọc Chà vá chân đỏ, chim trĩ...
+                </p>
+                <p data-i18n="conserve_why_desc_2">
+                    Sự hỗ trợ của bạn giúp chúng tôi cung cấp thức ăn tươi, chăm sóc y tế chuyên sâu, cải thiện môi trường sống và tiếp tục các chương trình bảo tồn quan trọng.
+                </p>
+            </div>
+        </section>
+
+        <section class="bg-lime-50 rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in-element">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="md:w-2/3">
+                    <h2 class="text-3xl font-bold text-green-800 mb-4" data-i18n="conserve_cta_title">Hỗ Trợ Sứ Mệnh Của Chúng Tôi</h2>
+                    <p class="text-lg text-slate-700 mb-6" data-i18n="conserve_cta_desc">
+                        Mọi đóng góp, dù lớn hay nhỏ, đều tạo nên sự khác biệt lớn lao cho cuộc sống của các loài động vật. Hãy cùng chúng tôi biến Thảo Cầm Viên thành một mái nhà xanh và hạnh phúc.
+                    </p>
+                    <a href="tel:0962194144" class="inline-block bg-orange-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-orange-600 transition duration-300 transform hover:-translate-y-1">
+                        <span data-i18n="conserve_cta_button">Quyên Góp Ngay</span> (096 219 4144)
+                    </a>
+                </div>
+                <div class="md:w-1/3 text-center">
+                    <img src="/image/baotonhe.jpg" alt="Quyên góp" class="w-48 h-48 mx-auto">
+                </div>
+            </div>
+        </section>
+
+        <section class="fade-in-element">
+            <h2 class="text-3xl font-bold text-slate-900 text-center mb-8" data-i18n="conserve_stories_title">Câu Chuyện Cứu Hộ & Chăm Sóc</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <div class="group bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105">
+                    <img src="/image/tinho1.jpg.png" alt="Ông hổ Tây" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-slate-900 mb-3 h-14" data-i18n="news_2_title">
+                            Khách dự tiệc sinh nhật và chia tay hổ nghỉ hưu
+                        </h3>
+                        <p class="text-slate-600 text-sm mb-4" data-i18n="conserve_story_1_desc">
+                            Câu chuyện về "ông hổ Tây" được cứu hộ từ Bình Dương, hồi phục và sống một cuộc đời "nghỉ hưu" hạnh phúc tại Thảo Cầm Viên.
+                        </p>
+                        <a href="#" class="font-semibold text-green-600 hover:text-green-700 conservation-story-link" data-news-id="2">
+                            <span data-i18n="conserve_story_read_more">Đọc thêm</span> →
+                        </a>
+                    </div>
+                </div>
+
+                <div class="group bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105">
+                    <img src="/image/tinho.jpg.png" alt="Hổ trắng Ngộ Không" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-slate-900 mb-3 h-14" data-i18n="news_1_title">
+                            Hổ trắng quý hiếm ở Thảo Cầm Viên chết
+                        </h3>
+                        <p class="text-slate-600 text-sm mb-4" data-i18n="conserve_story_2_desc">
+                            Ngộ Không, một trong hai hổ trắng sinh ra tại Thảo Cầm Viên, là biểu tượng cho sự nỗ lực chăm sóc các loài đột biến gen quý hiếm.
+                        </p>
+                        <a href="#" class="font-semibold text-green-600 hover:text-green-700 conservation-story-link" data-news-id="1">
+                            <span data-i18n="conserve_story_read_more">Đọc thêm</span> →
+                        </a>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+        
+    </main>
+</div>
 <footer class="bg-green-800 text-gray-200 pt-16 pb-8">
     <div class="container mx-auto px-6">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
@@ -810,6 +1007,18 @@ bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.4s;"></span>
                 el.classList.add('fade-in-element');
                 observer.observe(el);
             });
+            // THÊM ĐOẠN NÀY VÀO:
+            // Thêm code để quan sát (observe) các mục sự kiện
+            const eventElements = document.querySelectorAll('#page-events .fade-in-element');
+            eventElements.forEach(el => {
+                observer.observe(el);
+            });
+            // Thêm code để quan sát (observe) các mục bảo tồn
+                const conservationElements = document.querySelectorAll('#page-conservation .fade-in-element');
+                conservationElements.forEach(el => {
+                    observer.observe(el);
+                });
+            // KẾT THÚC ĐOẠN THÊM VÀO
             
             
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -1213,6 +1422,57 @@ function handleHashChange() {
                 showNewsDetail(newsId);
             });
         });
+        // Xử lý khi bấm link menu "Lịch Sự Kiện"
+            document.querySelectorAll('a[href="#page-events"]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showPage('events');
+                    location.hash = '#events-page';
+                    // Đóng menu mobile nếu đang mở
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if(mobileMenu) mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // Xử lý nút quay lại trên trang sự kiện
+            const backToHomeEvents = document.getElementById('back-to-home-events');
+            if(backToHomeEvents) {
+                backToHomeEvents.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showPage('home');
+                });
+            }
+            // Xử lý khi bấm link menu "Bảo Tồn"
+            document.querySelectorAll('a[href="#page-conservation"]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showPage('conservation');
+                    location.hash = '#conservation-page';
+                    // Đóng menu mobile nếu đang mở
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if(mobileMenu) mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // Xử lý nút quay lại trên trang bảo tồn
+            const backToHomeConservation = document.getElementById('back-to-home-conservation');
+            if(backToHomeConservation) {
+                backToHomeConservation.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showPage('home');
+                });
+            }
+            
+            // Xử lý link "Đọc thêm" trên trang bảo tồn
+            document.querySelectorAll('.conservation-story-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const newsId = parseInt(link.dataset.newsId);
+                    if(typeof showNewsDetail === 'function') {
+                        showNewsDetail(newsId);
+                    }
+                });
+            });
 
             document.querySelectorAll('.home-link').forEach(link => {
                 link.addEventListener('click', (e) => {
@@ -1536,7 +1796,10 @@ let newsDetailImg, newsDetailName, newsDetailDate, newsDetailContent, newsDetail
                 pageProductDetail.classList.add('hidden');
                 const pageNewsDetail = document.getElementById('page-news-detail'); 
                 if(pageNewsDetail) pageNewsDetail.classList.add('hidden'); 
-
+const pageEvents = document.getElementById('page-events'); // Thêm dòng này
+                if(pageEvents) pageEvents.classList.add('hidden'); // Thêm dòng này
+                const pageConservation = document.getElementById('page-conservation'); // Thêm dòng này
+                if(pageConservation) pageConservation.classList.add('hidden'); // Thêm dòng này
                 if (pageId === 'home') {
                     pageHome.classList.remove('hidden');
                     location.hash = '';
@@ -1544,6 +1807,10 @@ let newsDetailImg, newsDetailName, newsDetailDate, newsDetailContent, newsDetail
                     pageProductDetail.classList.remove('hidden');
                 } else if (pageId === 'news') { 
                     if(pageNewsDetail) pageNewsDetail.classList.remove('hidden');
+                }else if (pageId === 'events') { // Thêm 2 dòng này
+                    if(pageEvents) pageEvents.classList.remove('hidden'); //
+                }else if (pageId === 'conservation') { // Thêm 2 dòng này
+                    if(pageConservation) pageConservation.classList.remove('hidden'); //
                 }
                 window.scrollTo(0, 0);
             }

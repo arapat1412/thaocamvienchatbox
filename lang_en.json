@@ -92,8 +92,42 @@
   "news_2_title": "Guests attend a birthday party and say goodbye to a retired tiger",
   "news_3_title": "Zoo profits halved",
   "news_4_title": "160-year-old zoo freed from debt, profited over 4.8 billion VND"
-
-   
+,
+  "nav_events": "Schedule",
+  "events_title": "Events & Shows Schedule",
+  "events_desc": "Don't miss out on exciting activities and special performances only at Saigon Zoo!",
+  "events_weekend_only": "Weekends Only",
+  "events_all_day": "All Day",
+  "event_1_time": "9:00 AM - 11:00 AM & 2:00 PM - 4:00 PM",
+  "event_1_title": "Children's Zoo Interaction",
+  "event_1_desc": "A wonderful chance for kids to meet and interact with friendly goats and sheep.",
+  "event_1_loc": "Location: Children's Zoo",
+  "event_2_time": "10:30 AM - 12:30 PM & 2:00 PM - 4:00 PM",
+  "event_2_title": "Special Circus & Magic Show",
+  "event_2_desc": "Enjoy fun and engaging performances from our talented artists.",
+  "event_2_loc": "Location: Main Stage",
+  "event_3_time": "8:00 AM - 5:00 PM",
+  "event_3_title": "Flora & Fauna Museum Visit",
+  "event_3_desc": "Explore a diverse collection of specimens and learn about natural history.",
+  "event_3_loc": "Location: Museum (Near Main Gate)",
+  "event_4_time": "8:00 AM - 5:00 PM",
+  "event_4_title": "Butterfly & Flamingo Garden",
+  "event_4_desc": "Admire the vibrant beauty of thousands of butterflies and the grace of the flamingo flock.",
+  "event_4_loc": "Location: Butterfly Garden Area"
+   ,
+  "nav_conservation": "Conservation",
+  "conserve_title": "Join Hands for Conservation",
+  "conserve_desc": "Our mission is to protect, breed, and rescue rare animal species, helping to preserve biodiversity for future generations.",
+  "conserve_why_title": "Why is Conservation Important?",
+  "conserve_why_desc_1": "Every animal is an indispensable link in the ecosystem. When one species disappears, the balance of nature is threatened. Saigon Zoo is not just a tourist destination, but also a safe home, a place to rescue and treat injured individuals, and a breeding center for rare species like the Red-shanked Douc Langur, pheasants...",
+  "conserve_why_desc_2": "Your support helps us provide fresh food, specialized medical care, improve habitats, and continue important conservation programs.",
+  "conserve_cta_title": "Support Our Mission",
+  "conserve_cta_desc": "Every donation, big or small, makes a huge difference in the lives of our animals. Join us in making the Zoo a green and happy home.",
+  "conserve_cta_button": "Donate Now",
+  "conserve_stories_title": "Rescue & Care Stories",
+  "conserve_story_1_desc": "The story of 'Mr. Tay' the tiger, rescued from Binh Duong, recovered, and lived a happy 'retirement' life at Saigon Zoo.",
+  "conserve_story_2_desc": "Ngo Khong, one of two white tigers born at Saigon Zoo, symbolizes the effort to care for rare genetic mutation species.",
+  "conserve_story_read_more": "Read More"
    
 
 }
