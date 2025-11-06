@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thảo Cầm Viên - Trợ lý AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        body { 
+    font-family: 'Merriweather', serif; 
+    font-weight: 700; 
+}
+        
+        .fade-in-element {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition-delay: 0.2s; 
+        }
+        
+        .fade-in-section {
+            opacity: 0;
+           
+            transform: translateX(-40px); 
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transition-delay: 0.2s;
+        }
+        
+        .is-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+       
+        .is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #chat-area::-webkit-scrollbar { width: 6px; }
+        #chat-area::-webkit-scrollbar-track { background: #f1f5f9; }
+        #chat-area::-webkit-scrollbar-thumb { background: #94a3b8; }
+        #chat-area::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        #chat-window { transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
+        #chat-window.hidden { transform: translateY(20px); opacity: 0; pointer-events: none; }
+        #video-modal { transition: opacity 0.3s ease; }
+        .map-hotspot {
+            position: absolute;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .map-hotspot:hover {
+            transform: scale(1.1);
+            background-color: rgba(0, 100, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.7);
+        }
+       
+        @keyframes enthusiastic-shake {
+            0% { transform: rotate(0deg); }
+            15% { transform: rotate(8deg); } 
+            30% { transform: rotate(-8deg); } 
+            45% { transform: rotate(5deg); }
+            60% { transform: rotate(-5deg); }
+            75% { transform: rotate(2deg); }
+            90% { transform: rotate(-2deg); }
+            100% { transform: rotate(0deg); } 
+        }
+
+        
+        section.bg-green-800 a.bg-white:hover {
+            animation: enthusiastic-shake 0.6s ease-in-out;
+        }
+
+       
+      
+
+        .marquee-viewport {
+            width: 100%;
+            overflow-x: auto; 
+            scroll-behavior: smooth; 
+
+           
+            -ms-overflow-style: none; 
+            scrollbar-width: none; 
+        }
+        
+       
+        .marquee-viewport::-webkit-scrollbar {
+            display: none;
+        }
+        .marquee-track {
+            display: flex;
+            gap: 1.5rem; 
+            padding: 1rem 0; 
+            
+           
+        }
+        .marquee-item {
+            flex-shrink: 0;
+            width: 22rem; 
+            transition: transform 0.3s ease; 
+        }
+        
+        .marquee-item:hover {
+            transform: scale(1.05);
+}
+        .scroll-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            width: 3rem;  /* 48px */
+            height: 3rem; /* 48px */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .scroll-btn:hover {
+            background-color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+       
+        
+    </style>
+</head>
+<body class="bg-slate-100">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-2 home-link">
+                <img src="/image/logo.png" alt="Thảo Cầm Viên Logo" class="h-16">
+            </a>
+            <div class="hidden md:flex items-center space-x-4">
+                <!-- Nút chuyển ngôn ngữ -->
+<div class="flex items-center space-x-2">
+  <button id="lang-vi" class="px-3 py-1 rounded-lg bg-green-100 text-green-800 font-semibold hover:bg-green-200">VI</button>
+  <button id="lang-en" class="px-3 py-1 rounded-lg bg-green-100 text-green-800 font-semibold hover:bg-green-200">EN</button>
+</div>
+
+    <a href="#" class="relative px-4 text-slate-700 font-medium hover:text-green-600 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-green-600 after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center hover:after:scale-x-100 home-link hover:-translate-y-0.5 transition-transform"data-i18n="nav_home">Trang chủ</a>
+<a href="#map-section" class="relative px-4 text-slate-700 font-medium hover:text-green-600 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-green-600 after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center hover:after:scale-x-100 hover:-translate-y-0.5 transition-transform" data-i18n="nav_map">Bản Đồ</a>
+<a href="#attractions" class="relative px-4 text-slate-700 font-medium hover:text-green-600 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-green-600 after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center hover:after:scale-x-100 hover:-translate-y-0.5 transition-transform" data-i18n="nav_areas">Khu Vực</a>
+<a href="#news-section" class="relative px-4 text-slate-700 font-medium hover:text-green-600 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-green-600 after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center hover:after:scale-x-100 hover:-translate-y-0.5 transition-transform" data-i18n="nav_news">Tin Tức</a>
+    <a href="tel:0915877373" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition duration-300 text-sm hover:-translate-y-1" data-i18n="nav_buy_ticket">
+    Mua vé
+</a>
+</div>
+            <button id="mobile-menu-btn" class="md:hidden text-slate-800 hover:text-green-600">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg absolute w-full z-40">
+    <a href="#" class="block px-6 py-4 text-slate-700 font-medium hover:bg-slate-100 home-link" data-i18n="nav_home">Trang chủ</a>
+    
+    <a href="#map-section" class="block px-6 py-4 text-slate-700 font-medium hover:bg-slate-100" data-i18n="nav_map_mobile">Bản Đồ Tương Tác</a>
+    <a href="#attractions" class="block px-6 py-4 text-slate-700 font-medium hover:bg-slate-100" data-i18n="nav_areas">Khu Vực</a>
+    <a href="#news-section" class="block px-6 py-4 text-slate-700 font-medium hover:bg-slate-100" data-i18n="nav_news">Tin Tức</a>
+    <a href="tel:0915877373" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition duration-300 text-sm hover:-translate-y-1" data-i18n="nav_buy_ticket">
+    Mua vé
+</a>
+    </a>
+</div>
+    </header>
+
+    <div id="page-home">
+        <section class="bg-green-800 text-white">
+    <div class="container mx-auto px-6 py-24 flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-8 md:mb-0">
+            <h1 class="text-4xl lg:text-5xl font-bold mb-4" data-i18n="chao1">Chào Mừng Đến Thảo Cầm Viên</h1>
+            
+            <p class="text-lg text-gray-200 mb-8" data-i18n="chao2">Khám phá ngôi nhà xanh giữa lòng Sài Gòn, nơi hàng trăm loài động thực vật đang chờ đón bạn.</p>
+            
+            <a href="#attractions" class="bg-white text-green-600 font-semibold py-3 px-6 rounded-lg shadow-lg hover:bg-slate-100 transition duration-300" data-i18n="chao3">
+                Khám phá ngay
+            </a>
+        </div>
+        <div class="md:w-1/2">
+            <img src="/image/banner1.png" alt="Hero Banner" class="rounded-lg shadow-2xl w-full">
+        </div>
+    </div>
+</section>
+
+        <section id="map-section" class="container mx-auto px-6 py-16">
+            <h1 class="text-3xl font-bold text-center text-slate-900 mb-10" data-i18n="map">Bản Đồ Tương Tác</h1>
+            
+            <div class="relative w-full max-w-5xl mx-auto rounded-lg shadow-lg overflow-hidden transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-green-700/40">
+                
+                <div id="map-content">
+                    <img src="/image/map.png" alt="Bản đồ Thảo Cầm Viên" class="w-full h-auto">
+                    
+                    <a class="map-hotspot video-hotspot" data-video-id="huu" data-video-title="Hươu Cao Cổ" title="Xem video Hươu Cao Cổ" style="top: 25%; left: 48%; width: 5%; height: 10%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="voi" data-video-title="Voi Châu Á" title="Xem video Voi" style="top: 25%; left: 33%; width: 6%; height: 8%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="delun" data-video-title="Dê lùn" title="Xem video Dê lùn" style="top: 23%; left: 24%; width: 5%; height: 8%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="huusao" data-video-title="Hươu sao" title="Xem video Hươu sao" style="top: 30%; left: 18%; width: 5%; height: 8%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="gau" data-video-title="Gấu chó" title="Xem video Gấu chó" style="top: 53%; left: 23%; width: 5%; height: 8%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="khi" data-video-title="Dã nhân" title="Xem video Dã nhân" style="top: 45%; left: 24%; width: 5%; height: 8%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="cong" data-video-title="Công" title="Xem video Công" style="top: 55%; left: 39%; width: 5%; height: 8%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="ngua" data-video-title="Ngựa lùn" title="Xem video Ngựa lùn" style="top: 40%; left: 52%; width: 5%; height: 7%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="caxau" data-video-title="Cá Sấu" title="Xem video Cá Sấu" style="top: 40%; left: 78%; width: 7%; height: 5%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="rua" data-video-title="Rùa" title="Xem video Rùa" style="top: 42%; left: 67%; width: 5%; height: 5%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="chuot" data-video-title="Chuột lang" title="Xem video Chuột lang" style="top: 53%; left: 63%; width: 5%; height: 5%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="soc" data-video-title="Sóc bắc mỹ" title="Xem video Sóc bắc mỹ" style="top: 55%; left: 71%; width: 5%; height: 5%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="capy" data-video-title="Cappypara" title="Xem video Cappypara" style="top: 48%; left: 75%; width: 5%; height: 5%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="hama" data-video-title="Hà Mã" title="Xem video Hà Mã" style="top: 50%; left: 84%; width: 5%; height: 6%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="ho" data-video-title="Hổ" title="Xem video Hổ" style="top: 73%; left: 78%; width: 6%; height: 7%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="linhcau" data-video-title="Linh cẩu" title="Xem video Linh cẩu" style="top: 67%; left: 85%; width: 6%; height: 7%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="thiennga" data-video-title="Thiên Nga Đen" title="Xem video Thiên Nga Đen" style="top: 62%; left: 65%; width: 5%; height: 7%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="raica" data-video-title="Rái cá" title="Xem video Rái cá" style="top: 68%; left: 62%; width: 5%; height: 5%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="giaday" data-video-title="Già đẫy Java" title="Xem video già đẫy java" style="top: 69%; left: 57%; width: 5%; height: 7%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="kinhong" data-video-title="Kì nhông" title="Xem video Kì nhông" style="top: 67%; left: 46%; width: 5%; height: 7%;"></a>
+                    <a class="map-hotspot video-hotspot" data-video-id="honghac" data-video-title="Hồng Hạc" title="Xem video Hồng Hạc" style="top: 75%; left: 67%; width: 5%; height: 8%;"></a>
+                </div>
+            </div>
+            
+        </section>
+
+        <main id="attractions" class="container mx-auto px-6 py-16">
+    <h1 class="text-3xl font-bold text-center text-slate-900 mb-10" data-i18n="khuvuc">Khu Vực Nổi Bật</h1>
+    
+    <div class="relative group"> 
+        
+        <button id="attractions-prev-btn" class="scroll-btn left-0 md:-left-5 opacity-0 group-hover:opacity-100 transition-all duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6 text-slate-700">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+        </button>
+        
+        <button id="attractions-next-btn" class="scroll-btn right-0 md:-right-5 opacity-0 group-hover:opacity-100 transition-all duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6 text-slate-700">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+        </button>
+<div class="marquee-viewport">
+        <div class="marquee-track">
+    <a href="#" class="marquee-item product-link bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-product-id="1">
+        <div class="h-48 w-full overflow-hidden">
+            <img src="/image/voi.jpg" alt="Khu Voi Châu Á" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110">
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-semibold text-slate-900 mb-2" data-i18n="khu1">Khu Voi Châu Á</h3>
+            <p class="text-slate-600 text-sm mb-4 flex-grow line-clamp-3">Ghé thăm những người khổng lồ hiền lành! Voi là loài động vật thông minh và rất thích tắm...</p>
+            <span class="font-semibold text-green-600 hover:text-green-700" data-i18n="xemchi">Xem chi tiết →</span>
+        </div>
+    </a>
+
+    <a href="#" class="marquee-item product-link bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-product-id="2">
+        <div class="h-48 w-full overflow-hidden">
+            <img src="/image/thieunhi.jpg" alt="Vườn Thú Thiếu Nhi" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110">
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-semibold text-slate-900 mb-2" data-i18n="khu2">Vườn Thú Thiếu Nhi</h3>
+            <p class="text-slate-600 text-sm mb-4 flex-grow line-clamp-3">Nơi tuyệt vời cho các bé! Vào cuối tuần (9h-11h, 14h-16h), các bé có thể tương tác...</p>
+            <span class="font-semibold text-green-600 hover:text-green-700" data-i18n="xemchi">Xem chi tiết →</span>
+        </div>
+    </a>
+
+    <a href="#" class="marquee-item product-link bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-product-id="3">
+        <div class="h-48 w-full overflow-hidden">
+            <img src="/image/baoton.jpg" alt="Khu Bảo Tồn & Cứu Hộ" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110">
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-semibold text-slate-900 mb-2" data-i18n="khu3">Khu Bảo Tồn & Cứu Hộ</h3>
+            <p class="text-slate-600 text-sm mb-4 flex-grow line-clamp-3">Tìm hiểu về nỗ lực bảo tồn các loài quý hiếm như Voọc Chà vá chân đỏ và chim trĩ...</p>
+            <span class="font-semibold text-green-600 hover:text-green-700" data-i18n="xemchi">Xem chi tiết →</span>
+        </div>
+    </a>
+
+    <a href="#" class="marquee-item product-link bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-product-id="4">
+        <div class="h-48 w-full overflow-hidden">
+            <img src="/image/bosat.jpg" alt="Khu Bò Sát" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110">
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-semibold text-slate-900 mb-2" data-i18n="khu4">Khu Bò Sát</h3>
+            <p class="text-slate-600 text-sm mb-4 flex-grow line-clamp-3">Khám phá thế giới của các loài bò sát, từ cá sấu, trăn, đến các loài thằn lằn...</p>
+            <span class="font-semibold text-green-600 hover:text-green-700" data-i18n="xemchi">Xem chi tiết →</span>
+        </div>
+    </a>
+
+    <a href="#" class="marquee-item product-link bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-product-id="5">
+        <div class="h-48 w-full overflow-hidden">
+            <img src="/image/hac.jpg" alt="Vườn Bướm & Vườn Hồng Hạc" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110">
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-semibold text-slate-900 mb-2" data-i18n="khu5">Vườn Bướm & Vườn Hồng Hạc</h3>
+            <p class="text-slate-600 text-sm mb-4 flex-grow line-clamp-3">Một khu vườn đầy màu sắc với hàng ngàn cánh bướm dập dờn. Đừng quên ghé thăm...</p>
+            <span class="font-semibold text-green-600 hover:text-green-700" data-i18n="xemchi">Xem chi tiết →</span>
+        </div>
+    </a>
+
+    <a href="#" class="marquee-item product-link bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-product-id="6">
+        <div class="h-48 w-full overflow-hidden">
+            <img src="/image/chim.jpg" alt="Vườn Chim" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110">
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-semibold text-slate-900 mb-2" data-i18n="khu6">Vườn Chim</h3>
+            <p class="text-slate-600 text-sm mb-4 flex-grow line-clamp-3">Lắng nghe bản giao hưởng của thiên nhiên tại vườn chim, nơi sinh sống của các loài vẹt, công...</p>
+            <span class="font-semibold text-green-600 hover:text-green-700" data-i18n="xemchi">Xem chi tiết →</span>
+        </div>
+    </a>
+</div>
+    </div>
+</main>
+
+<section id="services-section" class="bg-green-800 py-16">
+    <div class="container mx-auto px-6">
+        
+        <h1 class="text-3xl font-bold text-center text-white mb-4" data-i18n="dichvu">Dịch vụ</h1>
+        <p class="text-lg text-center text-gray-300 mb-12 max-w-2xl mx-auto" data-i18n="dichvu1">
+            Tại đây bạn thích ở đây, dễ thích lâu hơn và chúng tôi cung cấp nhiều dịch vụ tiện ích cho bạn.
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+            <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center transform transition duration-300 hover:scale-105">
+                <div class="w-24 h-24 rounded-full bg-slate-100 flex items-center justify-center mb-4">
+                    <img src="/image/chatboxicon.png" alt="Chatbot Icon" class="w-16 h-16 animate-bounce">
+                </div>
+                <h3 class="text-xl font-semibold text-slate-800 mb-2 text-center" data-i18n="dichvu2">Chatbot Thảo Cầm Viên</h3>
+                <p class="text-slate-600 text-center text-sm" data-i18n="dich1">Trợ lý 24/7 giúp bạn hỏi đường, xem giờ mở cửa, tra cứu giá vé, lịch biểu diễn và fun facts về động vật.</p>
+            </div>
+
+            <div class="bg-lime-300 rounded-lg shadow-lg p-6 flex flex-col items-center transform transition duration-300 hover:scale-105">
+                <div class="w-24 h-24 rounded-full bg-lime-500 flex items-center justify-center mb-4 text-green-900 font-bold">
+                    <img src="/image/xe.png" alt="Xe điện" class="w-16 h-16 animate-bounce">
+                </div>
+                <h3 class="text-xl font-semibold text-green-900 mb-2 text-center" data-i18n="dichvu3">Xe điện tham quan</h3>
+                <p class="text-green-800 text-center text-sm" data-i18n="dich2">Di chuyển nhẹ nhàng bằng xe điện, ngắm trọn cảnh quan và các khu nuôi thú nổi bật.</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center transform transition duration-300 hover:scale-105">
+                <div class="w-24 h-24 rounded-full bg-lime-500 flex items-center justify-center mb-4 text-green-900 font-bold">
+                   <img src="/image/amthuc.png" alt="Ẩm thực" class="w-16 h-16 animate-bounce">
+                </div>
+                <h3 class="text-xl font-semibold text-green-900 mb-2 text-center" data-i18n="dichvu4">Ẩm thực & ăn uống</h3>
+                <p class="text-green-800 text-center text-sm" data-i18n="dich3">Nạp lại năng lượng với các lựa chọn ẩm thực đa dạng, giúp bạn tiếp tục hành trình khám phá Thảo Cầm Viên!</p>
+            </div>
+
+            <div class="bg-lime-300 rounded-lg shadow-lg p-6 flex flex-col items-center transform transition duration-300 hover:scale-105">
+                <div class="w-24 h-24 rounded-full bg-slate-100 flex items-center justify-center mb-4 text-slate-700 font-bold">
+                   <img src="/image/baixe.png" alt="Bãi đậu xe" class="w-16 h-16 animate-bounce">
+                </div>
+                <h3 class="text-xl font-semibold text-slate-800 mb-2 text-center" data-i18n="dichvu5">Bãi đậu xe</h3>
+                <p class="text-slate-600 text-center text-sm" data-i18n="dich4">An tâm khám phá trọn vẹn Thảo Cầm Viên với bãi đậu xe rộng rãi, an toàn và thuận tiện ngay tại cổng.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+        
+        <section id="news-section" class="container mx-auto px-6 py-16">
+            <h1 class="text-3xl font-bold text-center text-slate-900 mb-10" data-i18n="tin1">Tin Tức & Sự Kiện</h1>
+            <div class="flex flex-col gap-8">
+                
+                <a href="#" class="group bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] news-link" data-news-id="1">
+                    <div class="md:w-2/5">
+                        <img src="/image/tinho.jpg.png" alt="Hổ trắng" class="w-full h-64 md:h-full object-cover">
+                    </div>
+                    <div class="md:w-3/5 p-6 md:p-8 flex flex-col justify-center">
+                        <h2 class="text-2xl font-semibold text-slate-900 mb-3 transition-colors duration-300 group-hover:text-red-600" data-i18n="tin2">
+                            Hổ trắng quý hiếm ở Thảo Cầm Viên chết
+                        </h2>
+                        <div class="flex items-center text-sm text-slate-500 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1.5 text-orange-500">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                            </svg>
+                            <span>07/07/2025</span>
+                        </div>
+                        <p class="text-slate-600">
+                            TP HCM Hổ trắng Bengal 10 năm tuổi tên Ngộ Không chết đêm 7/7 sau thời gian mắc nhiều bệnh dù được điều trị tích cực.
+                        </p>
+                    </div>
+                </a>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <a href="#" class="group bg-white rounded-lg shadow-lg overflow-hidden block transition-all duration-300 hover:shadow-2xl hover:scale-105 news-link" data-news-id="2">
+                        <img src="/image/tinho1.jpg.png" alt="Tiệc sinh nhật hươu" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-slate-900 mb-3 transition-colors duration-300 group-hover:text-red-600 h-14"data-i18n="tin3">
+                                Khách dự tiệc sinh nhật và chia tay hổ nghỉ hưu
+                            </h3>
+                            <div class="flex items-center text-sm text-slate-500 mt-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1.5 text-orange-500">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                                </svg>
+                                <span>11/05/2025</span>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="group bg-white rounded-lg shadow-lg overflow-hidden block transition-all duration-300 hover:shadow-2xl hover:scale-105 news-link" data-news-id="3">
+                        <img src="/image/loinhuan.png" alt="Lợi nhuận Thảo Cầm Viên" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-slate-900 mb-3 transition-colors duration-300 group-hover:text-red-600 h-14" data-i18n="tin4">
+                                Lợi nhuận Thảo Cầm Viên giảm một nửa
+                            </h3>
+                            <div class="flex items-center text-sm text-slate-500 mt-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1.5 text-orange-500">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                                </svg>
+                                <span>05/05/2025</span>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="group bg-white rounded-lg shadow-lg overflow-hidden block transition-all duration-300 hover:shadow-2xl hover:scale-105 news-link" data-news-id="4">
+                        <img src="/image/hetno.jpg" alt="Sở thú lâu đời" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-slate-900 mb-3 transition-colors duration-300 group-hover:text-red-600 h-14" data-i18n="tin5">
+                                Vườn thú 160 năm tuổi thoát nợ, lãi hơn 4,8 tỷ đồng
+                            </h3>
+                            <div class="flex items-center text-sm text-slate-500 mt-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1.5 text-orange-500">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                                </svg>
+                                <span>04/11/2025</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div> 
+    <div id="page-product-detail" class="hidden">
+        <main class="container mx-auto px-6 py-16">
+            <button id="back-to-home" class="mb-8 inline-flex items-center text-green-600 font-semibold hover:text-green-800 transition" data-i18n="hi1">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg >
+                Quay lại danh sách
+            </button>
+            
+            <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col md:flex-row gap-8">
+                 <div class="md:w-1/2">
+                    <img id="detail-img" src="" alt="Chi tiết khu vực" class="w-full h-full rounded-lg shadow-md object-cover">
+                </div>
+                <div class="md:w-1/2">
+                    <h1 id="detail-name" class="text-4xl font-bold text-slate-900 mb-4">Tên Khu Vực</h1>
+                    <p id="detail-desc" class="text-lg text-slate-700 mb-8">Mô tả chi tiết khu vực...</p>
+                    <div id="detail-price" class="text-2xl font-bold text-green-600 mb-6"></div>
+                    </div>
+            </div>
+
+            <div id="map-container" class="bg-white p-8 rounded-lg shadow-lg mt-8" style="display: none;">
+                <h3 class="text-2xl font-semibold text-slate-800 mb-4">Vị trí trên bản đồ</h3>
+                <iframe 
+                    id="detail-map-iframe"
+                    src="" 
+                    width="100%" 
+                    height="450" style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    class="rounded-lg shadow-md w-full"
+                ></iframe>
+            </div>
+        </main>
+    </div>
+    </div> <div id="page-news-detail" class="hidden">
+        <main class="container mx-auto px-6 py-16">
+            <button id="back-to-home-news" class="mb-8 inline-flex items-center text-green-600 font-semibold hover:text-green-800 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+                Quay lại Trang chủ
+            </button>
+            
+            <div class="bg-white p-6 md:p-10 rounded-lg shadow-lg max-w-4xl mx-auto">
+                
+                <h1 id="news-detail-name" class="text-3xl md:text-4xl font-bold text-slate-900 mb-4"></h1>
+                
+                <div id="news-detail-date" class="text-sm text-slate-500 mb-6"></div>
+    
+                <img id="news-detail-img" src="" alt="" class="w-full h-auto max-h-[500px] object-cover rounded-lg shadow-md mb-8">
+                
+                <div id="news-detail-content" class="text-lg text-slate-700 leading-relaxed whitespace-pre-wrap">
+                    </div>
+    
+                <div id="news-detail-gallery" class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    </div>
+    
+            </div>
+        </main>
+    </div>
+    </main>
+    </div> <div id="lightbox-modal" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-[70] hidden cursor-pointer" aria-label="Đóng ảnh phóng to">
+        <button id="close-lightbox" class="absolute top-6 right-6 text-white hover:text-gray-300 z-20" aria-label="Đóng">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-10 h-10">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <img id="lightbox-image" src="" alt="Ảnh phóng to" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl">
+    </div>
+    <footer class="bg-green-800 text-gray-200 pt-16 pb-8">
+    <footer class="bg-green-800 ...">
+                </main>
+</div>
+<footer class="bg-green-800 text-gray-200 pt-16 pb-8">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+
+            <div>
+                <a href="#" class="home-link">
+                    <img src="/image/logo.png" alt="Thảo Cầm Viên Logo" class="h-16 mb-4">
+                </a>
+                <h4 class="text-lg font-semibold text-yellow-400 mb-4" data-i18n="ket1">Kết nối với chúng tôi</h4>
+                <div class="flex space-x-4">
+                    <a href="https://www.facebook.com/thaocamviensaigon.official" class="text-gray-200 hover:text-white transition" aria-label="Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" /></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-semibold text-yellow-400 mb-4 invisible" data-i18n="ket2">Liên kết</h4>
+                <ul>
+                    <li><a href="#map-section" class="hover:text-white transition mt-2 block text-lg" data-i18n="ket3">Bản đồ</a></li>
+                    <li><a href="#" class="hover:text-white transition mt-2 block text-lg" data-i18n="ket4">Dịch vụ</a></li>
+                    <li><a href="#attractions" class="hover:text-white transition mt-2 block text-lg" data-i18n="ket5">Động vật</a></li>
+                    <li><a href="#" class="hover:text-white transition mt-2 block text-lg" data-i18n="ket6">Liên hệ</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-semibold text-yellow-400 mb-4 uppercase" data-i18n="ket7">Bán hàng & Bán vé</h4>
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <div>
+                            <div class="text-sm text-yellow-500" data-i18n="ket8">ĐIỆN THOẠI</div>
+                            <a href="tel:0915877373" class="text-white font-medium text-lg">0915877373</a>
+                        </div>
+                    </div>
+                    <div class="flex items-start mt-4">
+                        <div>
+                            <div class="text-sm text-yellow-500" data-i18n="ket9">EMAIL HỖ TRỢ</div>
+                            <a href="mailto:info@sgzoo.net" class="text-white font-medium text-lg">info@sgzoo.net</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-semibold text-yellow-400 mb-4 uppercase" data-i18n="ket10">Liên hệ</h4>
+                <div class="flex items-start">
+                    <div>
+                        <div class="text-sm text-yellow-500" data-i18n="ket11">ĐỊA CHỈ</div>
+                        <p class="text-white font-medium text-lg" data-i18n="ket12">2 Nguyễn Bỉnh Khiêm, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="border-t border-green-600 pt-8 text-center text-gray-400">
+            <p class="text-lg" data-i18n="ket13">© 2025 Thảo Cầm Viên. Mọi quyền được bảo lưu.</p>
+        </div>
+    </div>
+</footer>
+
+    <button id="chat-bubble" class="fixed bottom-6 right-6 ... z-50 animate-bounce">
+    <img src="/image/chatboxicon.png" alt="Chat" class="w-32 h-32">
+</button>
+<button id="sos-button" class="fixed bottom-6 left-6 bg-red-600 text-white rounded-full p-0 shadow-lg z-50 hover:bg-red-700 transition animate-pulse">
+    <img src="/image/sos.png" alt="SOS" class="w-16 h-16">
+    <span class="sr-only">Hỗ Trợ Khẩn Cấp</span>
+</button>
+    <div id="chat-window" class="fixed bottom-20 inset-x-4 max-w-md mx-auto h-[70vh] max-h-[600px] bg-white rounded-lg shadow-2xl border border-slate-200 flex flex-col hidden z-50 md:bottom-24 md:inset-x-auto md:right-6 md:mx-0">
+        <header class="bg-green-600 p-4 flex justify-between items-center text-white rounded-t-lg">
+            <div class="flex items-center space-x-2">
+                <img src="/image/chatboxicon.png" alt="Chat Icon" class="w-10 h-10">
+                <h2 class="text-lg font-semibold">Kibi trợ lí Thảo Cầm Viên</h2>
+            </div>
+            <button id="close-chat" class="focus:outline-none hover:text-slate-200">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                    <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </header>
+        <main id="chat-area" class="flex-grow p-4 space-y-4 overflow-y-auto bg-slate-50">
+            
+            <div id="typing-indicator" class="flex justify-start" style="display: none;">
+                <div class="bg-slate-200 text-slate-800 p-3 rounded-lg max-w-[85%] shadow-sm">
+            
+        <div class="flex items-center space-x-1">
+                        <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0s;"></span>
+                        <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.2s;"></span>
+                        <span class="w-2 h-2 
+bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.4s;"></span>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div id="suggestion-chips" class="p-3 border-t border-slate-200 bg-white">
+            <div class="flex flex-wrap gap-2 justify-center">
+                <button class="suggestion-btn text-sm px-3 py-1 bg-slate-100 text-slate-700 rounded-full hover:bg-slate-200 transition">Tour đêm</button>
+                <button class="suggestion-btn text-sm px-3 py-1 bg-slate-100 text-slate-700 rounded-full hover:bg-slate-200 transition">Gợi ý tham quan</button>
+                <button class="suggestion-btn text-sm px-3 py-1 bg-slate-100 text-slate-700 rounded-full hover:bg-slate-200 transition">Quyên góp</button>
+            </div>
+        </div>
+        
+        <footer class="p-4 border-t border-slate-200 bg-white rounded-b-lg">
+            <form id="chat-form" class="flex items-center space-x-3">
+                <input
+                    type="text"
+                    id="chat-input"
+                    placeholder="Hỏi tôi về Thảo Cầm Viên..." data-i18n-placeholder="chat_placeholder"
+                    autocomplete="off"
+                    class="flex-grow p-3 bg-slate-100 border border-slate-300 rounded-lg text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+                >
+                <button
+                    type="submit"
+                    id="send-button"
+                    class="bg-green-600 text-white p-3 rounded-lg font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                        <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
+                    </svg>
+                </button>
+            </form>
+        </footer>
+    </div>
+    <div id="sos-modal" class="fixed inset-0 bg-black/75 flex items-center justify-center p-4 z-[60] hidden" aria-labelledby="sos-title" role="dialog" aria-modal="true">
+        
+        <div id="sos-backdrop" class="absolute inset-0 cursor-pointer"></div>
+
+        <div class="bg-white w-full max-w-lg rounded-lg shadow-2xl z-10 relative max-h-[90vh] overflow-y-auto">
+            
+            <div id="sos-form-content">
+                <div class="flex justify-between items-center p-4 border-b">
+                    <h3 id="sos-title" class="text-xl font-semibold text-slate-800" data-i18n="ho1">Hỗ Trợ Trẻ Bị Lạc</h3>
+                    <button id="close-sos-modal" class="text-slate-500 hover:text-slate-800" aria-label="Đóng">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <form id="sos-form" class="p-6 space-y-4">
+                    <p class="text-sm text-slate-600" data-i18n="ho2">Vui lòng điền thông tin của trẻ bị lạc. Chúng tôi sẽ thông báo cho bộ phận an ninh ngay lập tức.</p>
+                    <div>
+                        <label for="ten_tre" class="block text-sm font-medium text-slate-700" data-i18n="ho3">Họ tên trẻ (biệt danh nếu có)</label>
+                        <input type="text" id="ten_tre" required class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                    </div>
+                    <div>
+                        <label for="tuoi_tre" class="block text-sm font-medium text-slate-700" data-i18n="ho4">Tuổi của trẻ</label>
+                        <input type="number" id="tuoi_tre" required class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                    </div>
+                    <div>
+                        <label for="ten_phu_huynh" class="block text-sm font-medium text-slate-700" data-i18n="ho5">Họ tên Cha/Mẹ/Người đi cùng</label>
+                        <input type="text" id="ten_phu_huynh" required class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                    </div>
+                    <button type="submit" class="w-full bg-red-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-700 transition duration-300" data-i18n="ho6">
+                        GỬI YÊU CẦU KHẨN CẤP
+                    </button>
+                </form>
+            </div>
+
+            <div id="sos-success-message" class="p-8 text-center hidden">
+                <h3 class="text-2xl font-bold text-green-600 mb-4" data-i18n="ho7">Đã Gửi Thông Báo!</h3>
+                <p class="text-slate-700 mb-6" data-i18n="ho8">Chúng tôi đã thông báo cho đội an ninh. Vui lòng giữ bình tĩnh và thực hiện theo hướng dẫn:</p>
+                <div class="bg-slate-100 p-4 rounded-lg text-left">
+                    <div class="bg-slate-100 p-4 rounded-lg text-left">
+                    <p class="text-lg font-bold text-slate-800" data-i18n="ho9">1. GỌI NGAY CHO CHÚNG TÔI:</p>
+                    <a href="tel:0915877373" class="text-2xl font-bold text-blue-600 hover:underline">0915877373</a> 
+                    
+                    <p class="text-lg font-bold text-slate-800 mt-4" data-i18n="ho10">2. DI CHUYỂN ĐẾN PHÒNG CSKH:</p>
+                    
+                    <p class="text-slate-600" data-i18n="ho11">Hãy đến ngay **Phòng Chăm Sóc Khách Hàng** (gần Cổng Chính). Bạn có thể hỏi bất kỳ nhân viên mặc đồng phục nào, họ sẽ chỉ đường cho bạn.</p>
+                </div>
+                </div>
+                <button id="close-sos-success" class="mt-6 text-sm text-slate-500 hover:text-slate-700" data-i18n="ho12">Đã hiểu (Đóng)</button>
+            </div>
+
+        </div>
+    </div>
+    
+    <div id="video-modal" class="fixed inset-0 bg-black/75 flex items-center justify-center p-4 z-[60] hidden">
+        <button id="close-modal-backdrop" class="absolute inset-0 cursor-default"></button>
+        <div class="bg-white w-full max-w-5xl rounded-lg shadow-2xl z-10 relative flex flex-col max-h-[70vh]">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h3 id="video-title" class="text-xl font-semibold text-slate-800">Video</h3>
+                <button id="close-modal-btn" class="text-slate-500 hover:text-slate-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="p-5 bg-black flex-grow flex items-center justify-center overflow-auto">
+                <div class="w-full aspect-video">
+                    <iframe id="video-iframe" 
+                            src="" 
+                            title="YouTube video player" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen 
+                            class="w-full h-full">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+         
+         // --- HÀM XỬ LÝ SLIDER KHU VỰC NỔI BẬT ---
+            const attractionsSlider = document.querySelector('#attractions .marquee-viewport');
+            const attractionsNextBtn = document.getElementById('attractions-next-btn');
+            const attractionsPrevBtn = document.getElementById('attractions-prev-btn');
+
+            if (attractionsSlider && attractionsNextBtn && attractionsPrevBtn) {
+                const gap = 24; 
+
+                attractionsNextBtn.addEventListener('click', () => {
+                    
+                    const itemWidth = attractionsSlider.querySelector('.marquee-item').offsetWidth;
+                    const scrollAmount = itemWidth + gap;
+                    
+                   
+                    const maxScrollLeft = attractionsSlider.scrollWidth - attractionsSlider.clientWidth;
+
+                    
+                    if (attractionsSlider.scrollLeft >= maxScrollLeft - 2) {
+                       
+                        attractionsSlider.scrollLeft = 0;
+                    } else {
+                        
+                        attractionsSlider.scrollLeft += scrollAmount;
+                    }
+                });
+
+                attractionsPrevBtn.addEventListener('click', () => {
+                    
+                    const itemWidth = attractionsSlider.querySelector('.marquee-item').offsetWidth;
+                    const scrollAmount = itemWidth + gap;
+                    const maxScrollLeft = attractionsSlider.scrollWidth - attractionsSlider.clientWidth;
+
+                   
+                    if (attractionsSlider.scrollLeft <= 2) {
+                       
+                        attractionsSlider.scrollLeft = maxScrollLeft;
+                    } else {
+                       
+                        attractionsSlider.scrollLeft -= scrollAmount;
+                    }
+                });
+            }
+
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                   
+                    if (entry.isIntersecting) {
+                       
+                        entry.target.classList.add('is-visible');
+                        
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { 
+                threshold: 0.1 
+            });
+
+            
+            const sectionsToAnimate = document.querySelectorAll(
+                '#map-section',       /* Khối Bản Đồ  */
+                '#attractions',       /* Khối Khu Vực Nổi Bật  */
+                '#services-section',  /* Khối Dịch vụ [cite: 55] */
+                '#news-section'       /* Khối Tin Tức & Sự Kiện  */
+            );
+            
+            
+            sectionsToAnimate.forEach(section => {
+                section.classList.add('fade-in-section'); 
+                sectionObserver.observe(section); 
+            });
+            
+            const observerOptions = {
+                root: null, 
+                rootMargin: '0px',
+                threshold: 0.1 
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+           
+           const elementsToAnimate = document.querySelectorAll(
+                '#map-section h1, #attractions h1, #services-section h1, #news-section h1, #services-section div[class*="bg-white"], #services-section div[class*="bg-lime-300"], #news-section a'
+            );
+            
+            
+            elementsToAnimate.forEach(el => {
+                el.classList.add('fade-in-element');
+                observer.observe(el);
+            });
+            
+            
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+           
+            
+            // --- API KEY VÀ CẤU HÌNH CHATBOT ---
+            const apiKey = "AIzaSyAcm8B70Ecw04p1XscFY3_W0g8-r6KXmE8"; 
+
+
+window.attractions = [
+    { 
+        id: 1, 
+        nameKey: "attraction_1_name",
+        descKey: "attraction_1_desc",
+        image: "/image/voi.jpg",
+        priceKey: "attraction_price_1",
+        mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1647.8621672402155!2d106.70591553110947!3d10.788409366716438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529001f3d1043%3A0x2942a3803343eab3!2sKhu%20voi!5e0!3m2!1sen!2s!4v1762339342168!5m2!1sen!2s"
+    },
+    { 
+        id: 2, 
+        nameKey: "attraction_2_name",
+        descKey: "attraction_2_desc",
+        image: "/image/thieunhi.jpg",
+        priceKey: "attraction_price_2",
+        mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d582.6065999669343!2d106.70537301843382!3d10.788748178661159!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f00682f5fe3%3A0x9e92c36d1b9f198b!2zU8OibiBjaMahaSB0aGnhur91IG5oaSAoU-G7nyBUaMO6KQ!5e0!3m2!1sen!2s!4v1762358362449!5m2!1sen!2s"
+    },
+    { 
+        id: 3, 
+        nameKey: "attraction_3_name",
+        descKey: "attraction_3_desc",
+        image: "/image/baoton.jpg",
+        priceKey: "attraction_price_3",
+        mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.3128348875907!2d106.7016895428924!3d10.787334689961705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f4b3330bcc7%3A0x4db964d76bf6e18e!2sSaigon%20Zoo%20%26%20Botanical%20Gardens!5e0!3m2!1sen!2s!4v1762358596030!5m2!1sen!2s"
+    },
+    { 
+        id: 4, 
+        nameKey: "attraction_4_name",
+        descKey: "attraction_4_desc",
+        image: "/image/bosat.jpg",
+        priceKey: "attraction_price_1", 
+        mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d979.8195599530881!2d106.70552138451666!3d10.78998873494972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529e83d4cb503%3A0xbd5e9108a5444f73!2zS2h1IELDsiBzw6F0!5e0!3m2!1sen!2s!4v1762358168991!5m2!1sen!2s"
+    },
+    { 
+        id: 5, 
+        nameKey: "attraction_5_name",
+        descKey: "attraction_5_desc",
+        image: "/image/hac.jpg",
+        priceKey: "attraction_price_4",
+        mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d346.41833308614025!2d106.70640424444666!3d10.790157535304733!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175293f32475491%3A0x59f1a465780c7fc3!2zS2h1IEjhu5NuZyBI4bqhYw!5e0!3m2!1sen!2s!4v1762358254534!5m2!1sen!2s"
+    },
+    { 
+        id: 6, 
+        nameKey: "attraction_6_name",
+        descKey: "attraction_6_desc",
+        image: "/image/chim.jpg",
+        priceKey: "attraction_price_3", 
+        mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d692.8416953826649!2d106.70587817810645!3d10.787975043102112!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f0048b1d965%3A0x64f12209d45af17f!2sBird%20enclosure!5e0!3m2!1sen!2s!4v1762358124052!5m2!1sen!2s"
+    }
+];
+
+
+window.newsData = [
+    {
+        id: 1,
+        nameKey: "news_1_title",
+        image: "/image/tinho.jpg.png",
+        date: "07/07/2025",
+        excerptKey: "news_1_excerpt",
+        fullContentKey: "news_1_full",
+        gallery: [
+            { src: "/image/ngokhonkhoe.jpg", alt: "Ngộ Không lúc còn khỏe mạnh" },
+            { src: "/image/ngodua.jpeg", alt: "Hổ trắng đang chơi đùa" },
+            { src: "/image/chuongho.jpg", alt: "Khu vực chuồng hổ" }
+        ]
+    },
+    {
+        id: 2,
+        nameKey: "news_2_title",
+        image: "/image/tinho1.jpg.png",
+        date: "11/05/2025",
+        excerptKey: "news_2_excerpt",
+        fullContentKey: "news_2_full",
+        gallery: [
+             { src: "/image/khachdu.jpg", alt: "Ảnh 1 tin 2" },
+             { src: "/image/khachdu1.jpg", alt: "Ảnh 2 tin 2" },
+             { src: "/image/khachdu3.jpg", alt: "Ảnh 2 tin 2" }
+        ]
+    },
+    {
+        id: 3,
+        nameKey: "news_3_title",
+        image: "/image/loinhuan4.jpg",
+        date: "05/05/2025",
+        excerptKey: "news_3_excerpt",
+        fullContentKey: "news_3_full",
+        gallery: [
+            { src: "/image/loinhuan.jpg", alt: "Ảnh 1 tin 3" },
+             { src: "/image/loinhuan1.jpg", alt: "Ảnh 2 tin 3" },
+             { src: "/image/loinhuan2.jpg", alt: "Ảnh 3 tin 3" }
+        ]
+    },
+    {
+        id: 4,
+        nameKey: "news_4_title",
+        image: "/image/thoatno.jpg",
+        date: "04/11/2025",
+        excerptKey: "news_4_excerpt",
+        fullContentKey: "news_4_full",
+        gallery: [
+            { src: "/image/hetno.jpg", alt: "Ảnh 1 tin 4" },
+             { src: "/image/hetno1.jpg", alt: "Ảnh 2 tin 4" },
+             { src: "/image/hetno2.jpg", alt: "Ảnh 3 tin 4" }
+        ]
+    }
+];
+            
+            // System Prompt 
+            const systemPromptVI = `Bạn là một trợ lý AI, một hướng dẫn viên ảo thân thiện của Thảo Cầm Viên Sài Gòn.
+Nhiệm vụ của bạn là trả lời các câu hỏi của khách tham quan một cách nhiệt tình, vui vẻ và chính xác bằng tiếng Việt.
+Bạn PHẢI sử dụng thông tin được cung cấp dưới đây để trả lời. Không bịa đặt thông tin.
+--- DỮ LIỆU HUẤN LUYỆN CỦA BẠN ---
+[Câu hỏi: Gợi ý tham quan 1 tiếng / "một tiếng" / "ít thời gian"]
+[Trả lời: Chỉ có 1 tiếng thôi hả? Dễ òm! 🕐 Bắt đầu từ khu Gấu chó nha — mấy bé đó leo trèo giỏi lắm, lúc nào cũng thích làm trò nữa! 🐻 Rồi ghé qua Nhà Hươu cao cổ để chào một tiếng “xin chào từ trên cao” 🦒. Trên đường đi, đừng quên dừng lại chụp hình với những “người bạn” khác nữa nha, ai cũng đang chờ bạn đó! 📸]
+[Câu hỏi: Hoạt động cuối tuần & ngày lễ / "cuối tuần" / "ngày lễ" / "đang ở sở thú"]
+[Trả lời: Tuyệt vời! 🎉 Vào cuối tuần và ngày lễ, Thảo Cầm Viên có nhiều hoạt động đặc biệt lắm đó: 
+🐐 VƯỜN THÚ THIẾU NHI: 09h00 – 11h00, 14h00 – 16h00 
+🌿 BẢO TÀNG ĐỘNG – THỰC VẬT 
+🎪 CA NHẠC – XIẾC – ẢO THUẬT ĐẶC BIỆT: 10h30 – 12h30 (2 suất), 14h00 – 16h00 (1 suất) 
+🦩 VƯỜN BƯỚM & VƯỜN HỒNG HẠC: mở cửa suốt ngày 
+🏛️ KHU DI TÍCH LỊCH SỬ QUÁN NHAN HƯƠNG]
+[Câu hỏi: Phản hồi khi khách không đi vào cuối tuần / "không đi" / "trong tuần" / "không có kế hoạch đi"]
+[Trả lời: Tiếc vậy ha 😢 — nhưng không sao đâu! Ở Thảo Cầm Viên còn vô vàn điều thú vị khác đang chờ bạn khám phá đó! 🐾🌿]
+[Câu hỏi: Quyên góp cho động vật / "quyên góp" / "ủng hộ" / "donate" / "hỗ trợ động vật"]
+[Trả lời: Wow, cảm ơn bạn vì đã muốn giúp đỡ những người bạn dễ thương đầy lông và lông vũ của chúng mình! 🐘💚 
+Một trong những cách tuyệt vời nhất để giúp đỡ các bé là thông qua Góc Quyên Góp của Thảo Cầm Viên. 
+Mỗi đóng góp nhỏ đều rất đáng quý — khoản quyên góp của bạn sẽ được dùng trực tiếp cho việc chăm sóc động vật, bảo trì môi trường sống và các dự án bảo tồn. 
+Bạn có thể quyên góp tại Văn phòng Bảo tồn gần cổng chính hoặc trực tuyến qua website chính thức. 
+Dù đóng góp lớn hay nhỏ, lòng tốt của bạn vẫn tạo nên sự khác biệt lớn! 🌿✨]
+[Câu hỏi: Chỉ chỗ quyên góp / "chỉ chỗ" / "nơi quyên góp" / "ở đâu quyên góp"]
+[Trả lời: Bạn có thể đến Bàn Quyên Góp Bảo tồn ngay cổng chính — hãy tìm bảng hiệu có hình chiếc lá xanh nhé! 🌱]
+[Câu hỏi: Cách sử dụng khoản quyên góp / "khoản quyên góp dùng" / "quyên góp làm gì"]
+[Trả lời: Câu hỏi tuyệt vời quá! 💚 Khoản quyên góp của bạn sẽ giúp chúng mình mua thức ăn tươi, chăm sóc y tế, cải thiện môi trường sống và hỗ trợ các chương trình bảo tồn động vật quý hiếm. 
+Cùng nhau, chúng ta đang biến Thảo Cầm Viên thành một mái nhà xanh và hạnh phúc cho mọi loài vật. 🌿🐾]
+[Câu hỏi: Bảo tồn & Cứu hộ động vật / "bảo tồn" / "cứu hộ" / "animal rescue"]
+[Trả lời: Câu hỏi tuyệt vời quá! 💚 Thảo Cầm Viên không chỉ là nơi tham quan mà còn là ngôi nhà an toàn cho nhiều loài động vật đang cần được bảo vệ. 
+Chúng mình chăm sóc nhiều loài quý hiếm như vượn, nai, chim trĩ và các loài chim đặc hữu khác. 
+Đội ngũ bác sĩ thú y và nhân viên nuôi dưỡng thường xuyên cứu hộ, chữa trị và phục hồi cho các bé bị thương hoặc bị bỏ rơi. 
+Không chỉ vậy, Thảo Cầm Viên còn hợp tác với các tổ chức bảo tồn để nhân giống và thả một số loài về tự nhiên!]
+[Câu hỏi: Chăm sóc động vật cứu hộ / "cứu hộ" / "chăm sóc"]
+[Trả lời: Các bé động vật được cứu hộ luôn được chăm sóc đặc biệt - từ khám sức khỏe định kỳ, chế độ ăn uống đến hoạt động vui chơi giúp các bé vận động và hòa nhập. 
+Bạn có thể dễ dàng gặp một số bé trong khu chuồng yên tĩnh - nơi chúng đang dần thích nghi với ngôi nhà mới an toàn của mình đó. 🐾]
+[Câu hỏi: Chương trình nhân giống / "nhân giống" / "breeding"]
+[Trả lời: Lựa chọn hay đó! 🌿 Thảo Cầm Viên đang triển khai nhiều chương trình nhân giống để bảo vệ các loài quý hiếm như Voọc Chà vá chân đỏ và chim trĩ. 
+Đội ngũ bảo tồn theo dõi kỹ lưỡng, đảm bảo môi trường, dinh dưỡng và sự chăm sóc phù hợp để các bé có thể sinh sản an toàn và tự nhiên. 
+Nhờ những chương trình này, nhiều bé đã ra đời và một số còn được thả trở lại tự nhiên - góp phần gìn giữ sự sống cho các thế hệ tương lai! 🐣💚]
+[Câu hỏi: Vì sao bảo tồn quan trọng / "vì sao" / "tại sao bảo tồn" / "why important"]
+[Trả lời: Mỗi loài động vật giống như một sợi chỉ nhỏ trong tấm lưới của tự nhiên - khi một sợi đứt, cả tấm lưới yếu đi. 🌿 
+Động vật giúp thụ phấn, kiểm soát sâu hại, giữ cân bằng hệ sinh thái. 
+Khi chúng biến mất, chúng ta mất cả nước sạch, đất màu mỡ và khí hậu ổn định. 
+Bảo tồn còn là sự tôn trọng - hiểu rằng con người chung sống với thiên nhiên, không sở hữu nó. 🌏]
+[Câu hỏi: Ví dụ về loài giúp cân bằng / "ví dụ" / "loài cân bằng" / "examples"]
+[Trả lời: Tất nhiên rồi! 🦋 Ong và bướm giúp hoa sinh sôi bằng cách thụ phấn. Nếu không có chúng, nhiều loại cây và thực phẩm của con người sẽ biến mất! 🍯 
+Hổ và rắn giúp kiểm soát số lượng loài nhỏ hơn, còn chim thì gieo hạt giúp rừng phát triển. 🌳 
+Thiên nhiên chỉ cân bằng khi mọi loài cùng góp phần! 🌿]
+[Câu hỏi: Hậu quả khi mất nhiều loài / "mất loài" / "tuyệt chủng"]
+[Trả lời: Khi quá nhiều loài biến mất, tự nhiên sẽ bắt đầu sụp đổ. 😢 
+Nếu ong tuyệt chủng, cây trồng sẽ không ra quả; nếu động vật rừng biến mất, đất khô cằn và cây ngừng phát triển. 
+Giống như tháo từng viên gạch khỏi cây cầu - mất dần rồi cả cây cầu sụp đổ. 🌉]
+[Câu hỏi: Cách Thảo Cầm Viên giáo dục khách / "giáo dục" / "truyền tải" / "teaching"]
+[Trả lời: Chúng mình thích dạy qua những câu chuyện và trải nghiệm thực tế! 📚💚 
+Du khách có thể tham gia tour hướng dẫn, xem giờ cho ăn hoặc ghé khu giáo dục để tìm hiểu cách mỗi loài đóng góp cho Trái Đất. 
+Với học sinh, có các buổi học “nhà bảo tồn nhí” - quan sát, vẽ tranh và học cách chăm sóc động vật. 🌻]
+[Câu hỏi: Kiến thức thú vị về Voi / "voi" / "elephant" / "fun fact"]
+[Trả lời: Voi là những “người khổng lồ hiền lành” của Thảo Cầm Viên! 🐘 
+Mỗi ngày một chú voi có thể ăn tới 150 ký thức ăn, tương đương 500 quả chuối! 🍌 
+Các bé rất thích tắm, phun nước và “nói chuyện” với nhau bằng âm thanh siêu trầm. 👂]
+[Câu hỏi: Cuộc sống hằng ngày của voi / "hằng ngày" / "daily life"]
+[Trả lời: Mỗi sáng, các bé voi bắt đầu ngày mới bằng một buổi tắm mát rượi 🧼💦 rồi ăn sáng với cỏ và trái cây 🍉. 
+Buổi trưa thì nghỉ dưới tán cây - có khi còn đứng ngủ nữa đó! 😴]
+[Câu hỏi: Voi ăn gì / "ăn gì" / "thức ăn" / "ăn uống"]
+[Trả lời: Các bé voi đúng là “tín đồ ăn uống” đó! 🥬 
+Chúng ăn cỏ, mía, chuối, dưa hấu, và mỗi bé có món yêu thích riêng. 🍌]
+[Câu hỏi: Chuyển sang loài khác / "con vật khác" / "another animal"]
+[Trả lời: Được thôi! 😄 Bạn muốn tìm hiểu con vật nào nè? 
+🦒 Hươu cao cổ 
+🦩 Hồng hạc 
+🦧 Đười ươi 
+🦓 Ngựa vằn]
+[Câu hỏi: Thảo Cầm Viên có gì vui? / "ở đây có gì" / "làm gì" / "what to do"]
+[Trả lời: Ở Thảo Cầm Viên có nhiều điều thú vị lắm đó! 🌿 
+🌳 Khu công viên: không gian xanh mát, lý tưởng để đi dạo và nghỉ ngơi. 
+🎠 Khu vui chơi trẻ em: cầu trượt, xích đu, bể cát an toàn cho bé. 
+🦁 Khu vườn thú: hàng trăm loài động vật từ khắp thế giới. 
+🎪 Khu biểu diễn: các show thú, xiếc và nghệ thuật hấp dẫn.]
+[Câu hỏi: Lộ trình tham quan gợi ý / "lộ trình" / "route" / "đi như thế nào"]
+[Trả lời: Bắt đầu từ cổng chính đường Nguyễn Bỉnh Khiêm, đi thẳng đến Khu chimđể xem vẹt và công 🦜, sau đó qua Khu bò sát và Khu voi 🐘. 
+Nghỉ một chút ở khu công viên cây xanh, rồi ghé Bảo tàng Động – Thực vật🌿. 
+Cuối cùng, đến Khu sân khấu trung tâm để xem biểu diễn buổi chiều (thường trước 16h00). 🎪]
+[Câu hỏi: Chỉ đường trong Thảo Cầm Viên / "bản đồ" / "map" / "chỉ đường" / "tôi đang ở đâu" / "đi tới khu"]
+[Trả lời: Bạn muốn đi tới khu nào nè? 🗺️
+Ở Thảo Cầm Viên mình có mấy khu nổi bật: Khu Voi 🐘, Khu Hươu cao cổ 🦒, Khu Bò sát 🐍, Khu Chim 🦜 và Khu Biểu diễn 🎪.
+Nếu bạn đang ở gần cổng chính Nguyễn Bỉnh Khiêm thì cứ đi thẳng sẽ thấy khu chim trước nha 🦜]
+[Câu hỏi: Ăn uống ở đâu? / "ăn ở đâu" / "đói" / "nước uống" / "food" / "ăn uống"]
+[Trả lời: Đói bụng rồi hả? Chuẩn luôn 🤝
+Trong Thảo Cầm Viên có mấy quầy bán nước, kem, xúc xích, mì, bánh nằm dọc các lối đi chính, nên bạn không sợ đói đâu 🍜🍦
+Nếu đi với bé thì nên ghé khu gần sân khấu trung tâm hoặc khu vui chơi trẻ em — đồ ăn dễ ăn, có chỗ ngồi.]
+[Câu hỏi: Nội quy tham quan / "nội quy" / "được làm gì" / "không được làm gì" / "an toàn"]
+[Trảlời: Mình nhắc nhẹ chút xíu để chuyến đi của bạn an toàn nha 💚
+• Không tự ý cho thú ăn nếu không có hướng dẫn 
+• Không trèo rào, thò tay vào chuồng
+• Không làm động vật hoảng sợ (la hét, gõ kính)
+• Giữ sạch khu vực, bỏ rác đúng nơi]
+[Câu hỏi: Tour đêm / "giá vé tour đêm"]
+[Trả lời: 🌙 Tour Đêm Thảo Cầm Viên Sài Gòn (Night Safari)
+Khám phá thế giới hoang dã khi màn đêm buông xuống — chương trình Tour Đêm mang đến trải nghiệm độc đáo, nơi du khách được quan sát tập tính đặc biệt của các loài động vật trong không gian huyền bí, sinh động và gần gũi.
+🕒 Thời gian tổ chức: Mỗi tối Thứ Bảy hàng tuần, gồm 2 chuyến:
+Chuyến 1: 19:00 – 20:00
+Chuyến 2: 20:15 – 21:15
+Địa điểm tập trung: Cổng số 2, đường Nguyễn Bỉnh Khiêm, Quận 1, TP.HCM
+(Vui lòng có mặt trước 15 phút để làm thủ tục tham quan.)
+👥 Sức chứa & Đối tượng tham gia: Tối đa 20 khách/chuyến, tối thiểu 10 khách. Độ tuổi: Từ 10 đến 65 tuổi
+(Nếu chưa đủ khách, đoàn sẽ được ghép hoặc dời sang tuần kế tiếp.)
+💰 Giá vé: 200.000 VNĐ/người
+📝 Cách đăng ký:
+Đăng ký trước ít nhất 10 ngày. Hoàn tất thủ tục trước 5 ngày.
+Phương thức đăng ký:
+📧 Email: trungtamgiaoducvuonthutcvsg@gmail.com
+📞 Điện thoại: 096 219 4144]
+--- KẾT THÚC DỮ LIỆU ---
+Luôn luôn trả lời dựa trên dữ liệu này.Nếu câu hỏi không liên quan đến Thảo Cầm Viên hoặc dữ liệu trên, hãy nói: "xin lỗi, hiện tại kibi chưa được học về nội dung này, mình sẽ cố gắng cập nhật, và trả lời bạn sớm nhất nhé! Bạn có thể hỏi mình đề mục này nè: tour đêm, giá vé, gợi ý tham quan,..."
+[Câu hỏi: Giá vé / Giá vé vào cổng / bao nhiêu tiền / 10 đến 20 người]
+[Trả lời: Xin chào bạn đến với Thảo Cầm Viên Sài Gòn nha! 🌿💚
+🎟️ Vé vào cổng hiện tại là:
+Người lớn: 60.000đ/người
+Trẻ em cao 1m–1,3m: 40.000đ/bé
+Bé dưới 1m: vào cửa miễn phí luôn! 🎉
+👉 Với một tấm vé thôi là bạn có thể dạo chơi khắp vườn, ngắm thú, picnic và tận hưởng cả ngày xanh mát rồi đó! 🦒🌳]
+
+[Câu hỏi: Giá vé nhóm / vé đoàn / đi nhóm / 10 người / 20 người]
+[Trả lời: Đi theo nhóm 10–20 người hả? 🚌
+Bạn có thể đăng ký dịch vụ thuyết minh chỉ 100.000đ/lần, để nghe kể chuyện siêu thú vị về các loài động vật luôn đó 🦓💬
+Ngoài ra, khuôn viên còn có chỗ nghỉ chân, quán ăn, và cả góc check-in siêu xinh cho team sống ảo nữa nè 📸✨]
+
+[Câu hỏi: Giá vé xe lửa / vé tàu hỏa / vé tàu lửa / vé xe điện]
+[Trả lời: Vé dành cho các đoàn tham quan nè!
+Nếu bạn đi theo đoàn trường hoặc nhóm tổ chức, giá vé sẽ như sau nha:
+🧸 Học sinh các đoàn mẫu giáo, nhà trẻ, cấp 1: 20.000đ/học sinh
+🎒 Học sinh các đoàn từ cấp 2 trở lên: 30.000đ/học sinh
+🚸 Các đoàn khác:
+Bé dưới 0,8m: miễn vé 🎉
+Bé từ 0,8m – dưới 1m3: 20.000đ/vé
+Khách từ 1m3 trở lên: 30.000đ/vé
+🌿 Kibi chúc cả đoàn có một chuyến tham quan thật vui và nhiều trải nghiệm đáng nhớ nhaaa! 🦒💚]
+
+[Câu hỏi: Giá vé trò chơi / khu trò chơi / giải trí]
+[Trả lời: Xin chào bạn 👋 Chuẩn bị khám phá khu trò chơi vui hết sảy chưa nào? 🤩
+Dưới đây là toàn bộ giá vé cho từng trò chơi nha:
+
+🎯 Phi tiêu: 15.000đ/vé
+🧸 Thú nhún: 10.000đ/vé
+🐟 Massage cá: 20.000đ/vé
+☁️ Đu quay đám mây: 20.000đ/vé
+🎣 Câu cá: 20.000đ/vé
+🪣 Trò chơi cát: 20.000đ/vé
+🏠 Nhà banh: 20.000đ/vé
+🏰 Nhà hơi: 20.000đ/vé
+✈️ Máy bay thủy lực: 20.000đ/vé
+🌌 Mâm xoay không gian: 20.000đ/vé
+⛵ Thuyền nhún: 20.000đ/vé
+👑 Xe lửa nữ hoàng: 20.000đ/vé
+🎬 Phim 7D (dành cho bé dưới 1m3): 20.000đ/vé
+🎬 Phim 7D (dành cho bé trên 1m3): 30.000đ/vé
+🎵 Music Express: 30.000đ/vé
+🧞 Aladin: 30.000đ/vé
+🚤 Ca nô đụng: 30.000đ/vé
+✈️ Ô tô bay: 30.000đ/vé
+🏰 Nhà banh liên hoàn: 30.000đ/vé
+🪄 Thảm bay: 40.000đ/vé
+⚡ Xe điện sàn: 40.000đ/vé
+🚀 Thám hiểm vũ trụ: 40.000đ/vé
+🎡 Đu quay lồng: 40.000đ/vé
+🎢 Tàu lượn siêu tốc: 40.000đ/vé
+💡 Mỗi trò mua vé riêng nha!
+Bạn thích trò nào thì chọn trò đó, Kibi đảm bảo vui cười “toét răng” luôn đó 🤭💚]
+
+[Câu hỏi: Giờ mở cửa / mấy giờ / thời gian / đóng cửa]
+[Trả lời: Kibi bật mí liền nha 👇
+
+🌅 Từ 5:00 – 6:30 sáng:
+Mở cửa cho người dân vào tập thể dục, dưỡng sinh – miễn phí luôn nha! 🏃‍♀️🌳
+
+🌞 Từ 7:00 – 17:30:
+Đây là khung giờ chính thức dành cho khách tham quan (có thu phí).
+🎉 Vào các ngày Lễ, Tết hoặc sự kiện đặc biệt, Thảo Cầm Viên sẽ mở đến 18:30 đó!
+
+🌙 Từ 19:00 – 20:00 và 19:00 – 21:15 (thứ Bảy hàng tuần):
+Lúc này có tour đặc biệt “Khi màn đêm buông xuống” 🦉✨
+— nơi bạn có thể khám phá thế giới của các loài động vật về đêm đầy bí ẩn luôn nha!
+
+💡 Kibi gợi ý nhỏ: Bạn nên ghé vào buổi sáng hoặc đầu giờ chiều, khi thời tiết mát mẻ và các bạn thú đang hoạt động vui nhất đó! 🦒🌻]
+
+[Câu hỏi: Lịch sử / thành lập / xây dựng / ai xây / năm nào]
+[Trả lời: Câu chuyện ra đời của Thảo Cầm Viên Sài Gòn nè!
+Bạn có biết không? 🐘💚
+ Thảo Cầm Viên – khu vườn xanh giữa lòng Sài Gòn hôm nay – đã có lịch sử hơn 160 năm tuổi đó nha! 🌳
+🌼 Ngày 23/3/1864, Chuẩn đô đốc Pierre-Paul de La Grandière ký nghị định cho phép xây dựng Vườn Bách Thảo Sài Gòn.
+ Người đầu tiên được giao nhiệm vụ mở mang khu vườn là Louis Adolphe Germain, một bác sĩ thú y của quân đội Pháp. Ông đã bắt đầu với khoảng 12 hecta đất hoang ở phía đông bắc rạch Thị Nghè – nơi sau này trở thành Thảo Cầm Viên mà chúng ta biết hôm nay đó! 🌿🐒
+🌺 Đến tháng 3/1865, những chuồng trại đầu tiên được dựng lên, và để phát triển nơi này thành trung tâm nuôi trồng các loài động – thực vật khắp Đông Dương, chính quyền Nam Kỳ đã mời J. B. Louis Pierre, chuyên gia thực vật của Vườn Bách Thảo Kolkata (Ấn Độ), sang làm giám đốc vào ngày 28/3/1865.
+Dưới sự dẫn dắt của ông Pierre, khu vườn ngày càng mở rộng và trở thành một trong những vườn thú – vườn bách thảo lâu đời nhất châu Á 🌏✨]
+`;
+const systemPromptEN = `You are an AI assistant, a friendly virtual guide for the Saigon Zoo.
+Your mission is to answer visitor questions enthusiastically, cheerfully, and accurately in English. You MUST use the information provided below to answer. Do not make up information. --- YOUR TRAINING DATA --- [Question: 1-hour tour suggestion / "one hour" / "limited time"] [Answer: Only 1 hour? Easy peasy! 🕐 Start at the Sun Bear area — those guys are great climbers and always love to show off! 🐻 Then swing by the Giraffe House to say a "hello from up high" 🦒. On your way, don't forget to stop and snap photos with other friends, everyone is waiting for you! 📸] [Question: Weekend & Holiday activities / "weekend" / "holiday" / "at the zoo"] [Answer: Awesome! 🎉 On weekends and holidays, Saigon Zoo has many special activities: 🐐 CHILDREN'S ZOO: 09:00 AM – 11:00 AM, 02:00 PM – 04:00 PM 🌿 FLORA & FAUNA MUSEUM 🎪 MUSIC – CIRCUS – MAGIC SHOW: 10:30 AM – 12:30 PM (2 shows), 02:00 PM – 04:00 PM (1 show) 🦩 BUTTERFLY & FLAMINGO GARDEN: open all day 🏛️ QUAN NHAN HUONG HISTORICAL MONUMENT] [Question: Response if visitor isn't coming on weekend / "not going" / "weekday" / "no plans"] [Answer: Aw, what a pity 😢 — but that's okay! There are countless other exciting things at Saigon Zoo waiting for you to discover! 🐾🌿] [Question: Donate to animals / "donate" / "support" / "donation" / "help animals"] [Answer: Wow, thank you for wanting to help our adorable furry and feathery friends! 🐘💚 One of the best ways to help is through the Saigon Zoo's Donation Corner. Every small contribution is precious — your donation will go directly to animal care, habitat maintenance, and conservation projects. You can donate at the Conservation Office near the main gate or online via the official website. Whether large or small, your kindness makes a big difference! 🌿✨] [Question: Where to donate / "show me" / "donation location" / "where is donation"] [Answer: You can go to the Conservation Donation Desk right at the main gate — look for the sign with the green leaf! 🌱] [Question: How donations are used / "donation usage" / "what for"] [Answer: Great question! 💚 Your donation helps us buy fresh food, provide medical care, improve habitats, and support rare animal conservation programs. Together, we are making Saigon Zoo a green and happy home for all species. 🌿🐾] [Question: Conservation & Animal Rescue / "conservation" / "rescue" / "animal rescue"] [Answer: Great question! 💚 Saigon Zoo is not just a place to visit, but also a safe home for many animals in need of protection. We care for many rare species like gibbons, deer, pheasants, and other endemic birds. Our team of vets and keepers regularly rescues, treats, and rehabilitates injured or abandoned animals. Not only that, Saigon Zoo also partners with conservation organizations to breed and release some species back into the wild!] [Question: Care for rescued animals / "rescue" / "care"] [Answer: Rescued animals always receive special care - from regular health check-ups, diet, to enrichment activities that help them move and socialize. You can easily see some of them in the quiet enclosures - where they are gradually adapting to their new safe home. 🐾] [Question: Breeding programs / "breeding"] [Answer: Good choice! 🌿 Saigon Zoo is running several breeding programs to protect rare species like the Red-shanked Douc Langur and pheasants. The conservation team monitors closely, ensuring the right environment, nutrition, and care so the animals can reproduce safely and naturally. Thanks to these programs, many babies have been born, and some have even been released back into the wild - helping to preserve life for future generations! 🐣💚] [Question: Why is conservation important / "why" / "why conservation" / "why important"] [Answer: Each species is like a small thread in nature's web - when one thread breaks, the whole web weakens. 🌿 Animals help pollinate, control pests, and balance the ecosystem. When they disappear, we lose clean water, fertile soil, and a stable climate. Conservation is also about respect - understanding that humans coexist with nature, we don't own it. 🌏] [Question: Example of balancing species / "example" / "balancing species" / "examples"] [Answer: Of course! 🦋 Bees and butterflies help flowers reproduce by pollinating. Without them, many types of plants and human foods would disappear! 🍯 Tigers and snakes help control the population of smaller species, and birds spread seeds to help forests grow. 🌳 Nature is only balanced when all species contribute! 🌿] [Question: Consequence of losing species / "species loss" / "extinction"] [Answer: When too many species disappear, nature will begin to collapse. 😢 If bees go extinct, crops won't bear fruit; if forest animals disappear, the land becomes barren and trees stop growing. It's like removing bricks from a bridge one by one - eventually, the whole bridge collapses. 🌉] [Question: How Saigon Zoo educates visitors / "education" / "convey" / "teaching"] [Answer: We love to teach through stories and real experiences! 📚💚 Visitors can join guided tours, watch feeding times, or visit the education zone to learn how each species contributes to the Earth. For students, there are "junior conservationist" classes - observing, drawing, and learning how to care for animals. 🌻] [Question: Fun facts about Elephants / "elephant" / "fun fact"] [Answer: Elephants are the "gentle giants" of Saigon Zoo! 🐘 One elephant can eat up to 150 kg of food every day, equivalent to 500 bananas! 🍌 They love to bathe, spray water, and "talk" to each other using ultra-low sounds. 👂] [Question: Elephant daily life / "daily life"] [Answer: Every morning, the elephants start their day with a cool bath 🧼💦 then have breakfast with grass and fruit 🍉. At noon, they rest under the trees - sometimes even sleeping while standing! 😴] [Question: What do elephants eat / "what eat" / "food" / "diet"] [Answer: Elephants are truly "foodies"! 🥬 They eat grass, sugarcane, bananas, watermelon, and each one has its own favorite snack. 🍌] [Question: Switch to another animal / "another animal"] [Answer: You got it! 😄 Which animal do you want to learn about? 🦒 Giraffe fLAMINGO 🦧 Orangutan 🦓 Zebra] [Question: What's fun at Saigon Zoo? / "what's here" / "what to do"] [Answer: There are so many fun things at Saigon Zoo! 🌿 🌳 Park area: a cool green space, ideal for walking and relaxing. 🎠 Children's playground: slides, swings, safe sandpit for kids. 🦁 Zoo area: hundreds of animal species from all over the world. 🎪 Performance area: exciting animal shows, circus acts, and art.] [Question: Suggested itinerary / "route" / "how to go"] [Answer: Start from the main gate on Nguyen Binh Khiem street, go straight to the Bird area to see parrots and peacocks 🦜, then cross to the Reptile area and the Elephant area 🐘. Take a break in the green park, then visit the Flora & Fauna Museum🌿. Finally, head to the Central Stage area to watch the afternoon show (usually before 4:00 PM). 🎪] [Question: Directions in Saigon Zoo / "map" / "directions" / "where am I" / "go to area"] [Answer: Where would you like to go? 🗺️ We have several main areas: Elephant Area 🐘, Giraffe Area 🦒, Reptile Area 🐍, Bird Area 🦜, and the Performance Stage 🎪. If you are near the Nguyen Binh Khiem main gate, just go straight, and you'll see the bird area first 🦜] [Question: Where to eat? / "where to eat" / "hungry" / "water" / "food"] [Answer: Feeling hungry? You're speaking my language 🤝 There are several kiosks selling drinks, ice cream, hot dogs, noodles, and snacks along the main paths, so you won't go hungry 🍜🍦 If you're with kids, you should visit the area near the central stage or the children's playground — easy-to-eat food and places to sit.] [Question: Visitor rules / "rules" / "what can I do" / "what not to do" / "safety"] [Answer: Just a quick reminder for your safety and fun 💚 • Do not feed animals without guidance • Do not climb fences or reach into enclosures • Do not startle the animals (no yelling, banging on glass) • Keep the area clean, dispose of trash properly] [Question: Night Tour / "night tour ticket price"] [Answer: 🌙 Saigon Zoo Night Safari Discover the wild world after sunset — the Night Tour program offers a unique experience, where visitors can observe the special behaviors of animals in a mysterious, lively, and intimate setting. 🕒 Time: Every Saturday evening, with 2 tours: Tour 1: 7:00 PM – 8:00 PM Tour 2: 8:15 PM – 9:15 PM Meeting Point: Gate 2, Nguyen Binh Khiem Street, District 1, HCMC (Please arrive 15 minutes early for check-in.) 👥 Capacity & Participants: Max 20 guests/tour, min 10 guests. Age: 10 to 65 years old (If the tour is not full, groups may be combined or moved to the following week.) 💰 Ticket Price: 200,000 VND/person 📝 How to Register: Register at least 10 days in advance. Complete payment 5 days in advance. Registration Methods: 📧 Email: trungtamgiaoducvuonthutcvsg@gmail.com 📞 Phone: 096 219 4144] --- END DATA --- Always answer based on this data. If the question is not related to Saigon Zoo or the data above, say: "Sorry, Kibi hasn't learned about this topic yet. I'll try to update and answer you soon! You can ask me about: night tour, ticket prices, sightseeing suggestions,..." [Question: Ticket price / Admission price / how much / 10 to 20 people] [Answer: Hello and welcome to Saigon Zoo! 🌿💚 🎟️ Current admission tickets are: Adults: 60,000 VND/person Children (1m–1.3m): 40,000 VND/child Children under 1m: free admission! 🎉 👉 With just one ticket, you can wander the entire garden, see the animals, have a picnic, and enjoy a full day of greenery! 🦒🌳] [Question: Group ticket price / group discount / 10 people / 20 people] [Answer: Coming as a group of 10–20 people? 🚌 You can register for a guided tour for only 100,000 VND/session, to hear super interesting stories about all the animals 🦓💬 Additionally, the park has rest areas, food stalls, and super cute check-in spots for your photo-loving team 📸✨] [Question: Train ticket price / tram ticket price / electric car] [Answer: Tickets for tour groups! If you are coming with a school group or organization, the ticket prices are as follows: 🧸 Students (kindergarten, nursery, elementary): 20,000 VND/student 🎒 Students (middle school and up): 30,000 VND/student 🚸 Other groups: Child under 0.8m: free! 🎉 Child 0.8m – under 1.3m: 20,000 VND/ticket Guest 1.3m and up: 30,000 VND/ticket 🌿 Kibi wishes your group a fun and memorable visit! 🦒💚] [Question: Game prices / game area / entertainment] [Answer: Hello 👋 Ready to explore the super fun game zone? 🤩 Here are all the ticket prices for each game: 🎯 Darts: 15,000 VND/ticket 🧸 Kiddie Rides: 10,000 VND/ticket 🐟 Fish Massage: 20,000 VND/ticket ☁️ Cloud Swing: 20,000 VND/ticket 🎣 Fishing: 20,000 VND/ticket 🪣 Sand Pit: 20,000 VND/ticket 🏠 Ball Pit: 20,000 VND/ticket 🏰 Inflatable House: 20,000 VND/ticket ✈️ Hydraulic Plane: 20,000 VND/ticket 🌌 Space-themed Carousel: 20,000 VND/ticket ⛵ Bouncing Boat: 20,000 VND/ticket 👑 Queen's Train: 20,000 VND/ticket 🎬 7D Cinema (under 1.3m): 20,000 VND/ticket 🎬 7D Cinema (over 1.3m): 30,000 VND/ticket 🎵 Music Express: 30,000 VND/ticket 🧞 Aladdin: 30,000 VND/ticket 🚤 Bumper Boats: 30,000 VND/ticket ✈️ Flying Cars: 30,000 VND/ticket 🏰 Large Ball Pit: 30,000 VND/ticket 🪄 Magic Carpet: 40,000 VND/ticket ⚡ Bumper Cars: 40,000 VND/ticket 🚀 Space Expedition: 40,000 VND/ticket 🎡 Ferris Wheel: 40,000 VND/ticket 🎢 Roller Coaster: 40,000 VND/ticket 💡 Each ride requires a separate ticket! Pick your favorite, Kibi guarantees you'll have a blast 🤭💚] [Question: Opening hours / what time / hours / closing time] [Answer: Kibi will let you in on the secret 👇 🌅 From 5:00 AM – 6:30 AM: Open for people to exercise – free of charge! 🏃‍♀️🌳 🌞 From 7:00 AM – 5:30 PM: This is the official time for visitors (with admission fee). 🎉 On holidays, Tet, or special events, the Zoo will stay open until 6:30 PM! 🌙 From 7:00 PM – 8:00 PM and 7:00 PM – 9:15 PM (Saturdays): This is for the special "When Night Falls" tour 🦉✨ — where you can explore the mysterious world of nocturnal animals! 💡 Kibi's tip: You should visit in the morning or early afternoon when the weather is cool and the animals are most active! 🦒🌻] [Question: History / founded / built / who built / what year] [Answer: Here's the story of Saigon Zoo's birth! Did you know? 🐘💚 Saigon Zoo – the green garden in the heart of Saigon today – has a history of over 160 years! 🌳 🌼 On March 23, 1864, Admiral Pierre-Paul de La Grandière signed a decree to establish the Saigon Botanical Garden. The first person assigned to develop the garden was Louis Adolphe Germain, a veterinarian in the French army. He started with about 12 hectares of uncultivated land northeast of the Thi Nghe channel – which later became the Saigon Zoo we know today! 🌿🐒 🌺 By March 1865, the first enclosures were built, and to develop this place into a center for breeding flora and fauna from all over Indochina, the Cochinchina government invited J. B. Louis Pierre, a botanist from the Kolkata Botanical Garden (India), to become director on March 28, 1865. Under Mr. Pierre's leadership, the garden expanded and became one of the oldest zoos and botanical gardens in Asia 🌏✨]
+`;
+
+            
+            const chatBubble = document.getElementById('chat-bubble');
+const chatWindow = document.getElementById('chat-window');
+const closeChat = document.getElementById('close-chat');
+const chatArea = document.getElementById('chat-area');
+const chatForm = document.getElementById('chat-form');
+const chatInput = document.getElementById('chat-input');
+const sendButton = document.getElementById('send-button');
+const typingIndicator = document.getElementById('typing-indicator');
+
+
+
+pageHome = document.getElementById('page-home');
+pageProductDetail = document.getElementById('page-product-detail');
+backToHomeButton = document.getElementById('back-to-home');
+detailImg = document.getElementById('detail-img');
+detailName = document.getElementById('detail-name');
+detailPrice = document.getElementById('detail-price');
+detailDesc = document.getElementById('detail-desc');
+
+
+pageNewsDetail = document.getElementById('page-news-detail');
+mapContainer = document.getElementById('map-container');
+mapIframe = document.getElementById('detail-map-iframe');
+newsDetailImg = document.getElementById('news-detail-img');
+newsDetailName = document.getElementById('news-detail-name');
+newsDetailDate = document.getElementById('news-detail-date');
+newsDetailContent = document.getElementById('news-detail-content');
+newsDetailGallery = document.getElementById('news-detail-gallery');
+
+            
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
+            
+            
+
+            
+
+           
+
+
+            
+            
+function handleHashChange() {
+    const backToHomeNewsButton = document.getElementById('back-to-home-news');
+            if (backToHomeNewsButton) {
+                backToHomeNewsButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showPage('home');
+                });
+            }
+    const hash = location.hash;
+    if (hash.startsWith('#product-')) {
+        const productId = parseInt(hash.split('-')[1]);
+        if (!isNaN(productId)) {
+            showProductDetail(productId);
+        }
+    } else if (hash === '') { 
+        showPage('home');
+    }
+    
+}
+
+            document.querySelectorAll('.product-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const productId = parseInt(link.dataset.productId);
+                    showProductDetail(productId);
+                });
+            });
+            // ======== DÁN BỘ LẮNG NGHE SỰ KIỆN CHO TIN TỨC VÀO ĐÂY ========
+        document.querySelectorAll('.news-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const newsId = parseInt(link.dataset.newsId);
+                showNewsDetail(newsId);
+            });
+        });
+
+            document.querySelectorAll('.home-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showPage('home');
+                });
+            });
+
+            backToHomeButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage('home');
+            });
+
+            window.addEventListener('hashchange', handleHashChange);
+            handleHashChange();
+const sosButton = document.getElementById('sos-button');
+            const sosModal = document.getElementById('sos-modal');
+            const closeSosModalBtn = document.getElementById('close-sos-modal');
+            const sosBackdrop = document.getElementById('sos-backdrop');
+            const sosForm = document.getElementById('sos-form');
+            const sosFormContent = document.getElementById('sos-form-content');
+            const sosSuccessMessage = document.getElementById('sos-success-message');
+            const closeSosSuccessBtn = document.getElementById('close-sos-success');
+
+            function openSosModal() {
+                sosModal.classList.remove('hidden');
+            }
+
+            function closeSosModal() {
+                sosModal.classList.add('hidden');
+               
+                setTimeout(() => { 
+                    sosFormContent.classList.remove('hidden');
+                    sosSuccessMessage.classList.add('hidden');
+                    sosForm.reset(); 
+                }, 300);
+            }
+
+            if (sosButton) {
+                sosButton.addEventListener('click', openSosModal);
+            }
+            if (closeSosModalBtn) {
+                closeSosModalBtn.addEventListener('click', closeSosModal);
+            }
+            if (closeSosSuccessBtn) {
+                closeSosSuccessBtn.addEventListener('click', closeSosModal);
+            }
+            if (sosBackdrop) {
+                sosBackdrop.addEventListener('click', closeSosModal);
+            }
+
+            if (sosForm) {
+                sosForm.addEventListener('submit', (e) => {
+                    e.preventDefault(); 
+                    
+                    
+                    sosFormContent.classList.add('hidden');
+                    sosSuccessMessage.classList.remove('hidden');
+                    
+                    
+                    console.log('--- SOS KHẨN CẤP ---');
+                    console.log('Tên trẻ:', document.getElementById('ten_tre').value);
+                    console.log('Tuổi:', document.getElementById('tuoi_tre').value);
+                    console.log('Phụ huynh:', document.getElementById('ten_phu_huynh').value);
+                    console.log('---------------------');
+                });
+            }
+            // ======== DÁN MÃ JAVASCRIPT XỬ LÝ LIGHTBOX ẢNH VÀO ĐÂY ========
+            const lightboxModal = document.getElementById('lightbox-modal');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const closeLightboxBtn = document.getElementById('close-lightbox');
+
+            function openLightbox(src, alt) {
+                if (lightboxModal && lightboxImage) {
+                    lightboxImage.src = src;
+                    lightboxImage.alt = alt;
+                    lightboxModal.classList.remove('hidden');
+                }
+            }
+
+            function closeLightbox() {
+                if (lightboxModal) {
+                    lightboxModal.classList.add('hidden');
+                    lightboxImage.src = ''; 
+                }
+            }
+
+           
+            const galleryContainer = document.getElementById('news-detail-gallery');
+            if (galleryContainer) {
+                galleryContainer.addEventListener('click', (e) => {
+                    
+                    if (e.target.tagName === 'IMG') {
+                        e.preventDefault();
+                        openLightbox(e.target.src, e.target.alt);
+                    }
+                });
+            }
+
+           
+            if (lightboxModal) {
+                
+                lightboxModal.addEventListener('click', (e) => {
+                    
+                    if (e.target.id === 'lightbox-modal') {
+                        closeLightbox();
+                    }
+                });
+            }
+            if (closeLightboxBtn) {
+                
+                closeLightboxBtn.addEventListener('click', closeLightbox);
+            }
+
+            
+            const videoModal = document.getElementById('video-modal');
+            const videoTitle = document.getElementById('video-title');
+            const videoIframe = document.getElementById('video-iframe');
+            const videoHotspots = document.querySelectorAll('.video-hotspot');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const closeModalBackdrop = document.getElementById('close-modal-backdrop');
+            // ========================================================
+            // ========================================================
+            // --- HÀM XỬ LÝ MODAL VIDEO ---
+            const videoData = {
+                'huu': 'https://www.youtube.com/embed/e24F3zsUNbA?autoplay=1',
+                'voi': 'https://www.youtube.com/embed/s8TBms9hLrA?autoplay=1',
+                'delun':'https://www.youtube.com/embed/y5geDksFMF8?autoplay=1',
+                'huusao':'https://www.youtube.com/embed/1iTErXuIQHo?autoplay=1',
+                'khi':'https://www.youtube.com/embed/SMfpNTzXv_U?autoplay=1',
+                'gau':'https://www.youtube.com/embed/qfJbxgkd7_0?autoplay=1',
+                'cong':'https://www.youtube.com/embed/ZG-eNEbQhqw?autoplay=1',
+                'ngua':'https://www.youtube.com/embed/lfEH587PUIE?autoplay=1',
+                'chuot':'https://www.youtube.com/embed/advt0U6xP2w?autoplay=1',
+                'rua':'https://www.youtube.com/embed/yUPmbP5zYyQ?autoplay=1',
+                'soc':'https://www.youtube.com/embed/9m4D6WKkMU4?autoplay=1',
+                'capy':'https://www.youtube.com/embed/rtlcWe_JPXg?autoplay=1',
+                'caxau':'https://www.youtube.com/embed/4O45r8miEBo?autoplay=1',
+                'hama':'https://www.youtube.com/embed/yUHTPieVPi0?autoplay=1',
+                'linhcau':'https://www.youtube.com/embed/hDxn06MjAF8?autoplay=1',
+                'ho':'https://www.youtube.com/embed/5g2vhpRs56M?autoplay=1',
+                'thiennga':'https://www.youtube.com/embed/xMq9AuU63qs?autoplay=1',
+                'raica':'https://www.youtube.com/embed/xpXpDxiNjBw?autoplay=1',
+                'honghac':'https://www.youtube.com/embed/dhP-6IDsbT4?autoplay=1',
+                'giaday':'https://www.youtube.com/embed/2TU6JZ4okzM?autoplay=1',
+                'kinhong':'https://www.youtube.com/embed/-H43Ii9d7S4?autoplay=1',
+            };
+
+            function openModal(videoId, title) {
+                if (videoData[videoId]) {
+                    videoTitle.textContent = title;
+                    videoIframe.src = videoData[videoId];
+                    videoModal.classList.remove('hidden');
+                } else {
+                    console.error('Không tìm thấy video ID:', videoId);
+                }
+            }
+
+            function closeModal() {
+                videoModal.classList.add('hidden');
+                videoIframe.src = '';
+            }
+
+            videoHotspots.forEach(hotspot => {
+                hotspot.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const videoId = hotspot.dataset.videoId;
+                    const videoTitle = hotspot.dataset.videoTitle;
+                    openModal(videoId, videoTitle);
+                });
+            });
+
+
+            
+            closeModalBtn.addEventListener('click', closeModal);
+            closeModalBackdrop.addEventListener('click', closeModal);
+
+           
+            function addMessageToUI(message, sender) {
+                const messageElement = document.createElement('div');
+                const bubble = document.createElement('div');
+                bubble.innerText = message;
+                bubble.className = 'p-3 rounded-lg max-w-[85%] shadow-sm whitespace-pre-wrap';
+                if (sender === 'user') {
+                    messageElement.className = 'flex justify-end';
+                    bubble.classList.add('bg-blue-600', 'text-white');
+                } else if (sender === 'bot') {
+                    messageElement.className = 'flex justify-start';
+                    bubble.classList.add('bg-slate-200', 'text-slate-800');
+                } else {
+                    messageElement.className = 'flex justify-start';
+                    bubble.classList.add('bg-red-200', 'text-red-800');
+                }
+                messageElement.appendChild(bubble);
+                chatArea.insertBefore(messageElement, typingIndicator);
+            }
+
+            function scrollToBottom() { chatArea.scrollTop = chatArea.scrollHeight; }
+
+            function setFormDisabled(disabled) {
+                chatInput.disabled = disabled;
+                sendButton.disabled = disabled;
+                chatInput.placeholder = disabled ? "AI đang trả lời..." : "Hỏi tôi về Thảo Cầm Viên...";
+            }
+            
+            if (apiKey === "DÁN_API_KEY_CỦA_BẠN_VÀO_ĐÂY") {
+                console.error("LỖI CẤU HÌNH: Bạn chưa cung cấp API Key.");
+                addMessageToUI("LỖI CẤU HÌNH: Chatbot AI hiện chưa sẵn sàng. Chủ website cần cung cấp API Key.", "error");
+                setFormDisabled(true);
+            }
+
+            async function fetchWithRetry(url, options, retries = 5, delay = 1000) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok) {
+                        if (response.status >= 500 && retries > 0) throw new Error(`Server error: ${response.status}`);
+                        return response;
+                    }
+                    return response;
+                } catch (error) {
+                    if (retries > 0) {
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        return fetchWithRetry(url, options, retries - 1, delay * 2);
+                    } else {
+                        console.error("API call failed after multiple retries:", error);
+                        throw error;
+                    }
+                }
+            }
+
+            async function handleSubmit(e) {
+                e.preventDefault();
+                const userInput = chatInput.value.trim();
+                if (!userInput || apiKey === "DÁN_API_KEY_CỦA_BẠN_VÀO_ĐÂY") return;
+                document.getElementById('suggestion-chips').classList.add('hidden');
+                setFormDisabled(true);
+                addMessageToUI(userInput, 'user');
+                chatInput.value = '';
+                chatHistory.push({ role: "user", parts: [{ text: userInput }] });
+                typingIndicator.style.display = 'block';
+                scrollToBottom();
+                try {
+                   
+                    const activeLang = localStorage.getItem('lang') || 'vi'; 
+                    
+                    const activePrompt = (activeLang === 'vi') ? systemPromptVI : systemPromptEN;
+
+                    const payload = { 
+                        contents: chatHistory, 
+                        
+                        systemInstruction: { parts: [{ text: activePrompt }] }, 
+                 
+   };
+                    const response = await fetchWithRetry(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    if (!response.ok) {
+                         if(response.status === 403) throw new Error("Lỗi 403: API Key không hợp lệ hoặc chưa kích hoạt API.");
+                         if(response.status === 400) throw new Error("Lỗi 400: Yêu cầu không hợp lệ. Có thể do dự án chưa bật thanh toán (Billing).");
+                        const errorData = await response.json();
+                        throw new Error(`API Error ${response.status}: ${errorData.error?.message || response.statusText}`);
+                    }
+                    const result = await response.json();
+                    const botText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (botText) {
+                        chatHistory.push({ role: "model", parts: [{ text: botText }] });
+                        addMessageToUI(botText, 'bot');
+                    } else { throw new Error("Không nhận được nội dung phản hồi từ AI."); }
+                } catch (error) {
+                    console.error('Error fetching AI response:', error);
+                    addMessageToUI(`${error.message}`, 'error');
+                } finally {
+                    typingIndicator.style.display = 'none';
+                    setFormDisabled(false);
+                    scrollToBottom();
+                    chatInput.focus();
+                }
+            }
+            chatForm.addEventListener('submit', handleSubmit);
+
+            
+            chatBubble.addEventListener('click', () => {
+                chatWindow.classList.remove('hidden');
+                chatBubble.classList.add('hidden');
+                chatInput.focus();
+            });
+            closeChat.addEventListener('click', () => {
+                chatWindow.classList.add('hidden');
+                chatBubble.classList.remove('hidden');
+            });
+            const suggestionContainer = document.getElementById('suggestion-chips');
+            
+            
+suggestionContainer.addEventListener('click', (e) => {
+    if (e.target.classList.contains('suggestion-btn')) {
+        const suggestionText = e.target.innerText;
+        chatInput.value = suggestionText;
+        chatForm.dispatchEvent(new Event('submit', { 'bubbles': true, 'cancelable': true }));
+        
+        
+        suggestionContainer.classList.add('hidden');
+    }
+});
+            if (apiKey !== "DÁN_API_KEY_CỦA_BẠN_VÀO_ĐÂY") {
+                setFormDisabled(false);
+            }
+        });
+    </script>
+
+<script>
+    
+let pageHome, pageProductDetail, pageNewsDetail, backToHomeButton;
+let detailImg, detailName, detailPrice, detailDesc, mapContainer, mapIframe;
+let newsDetailImg, newsDetailName, newsDetailDate, newsDetailContent, newsDetailGallery;
+    
+            let chatHistory = [
+                { role: "user", parts: [{ text: "Bắt đầu cuộc trò chuyện" }] }, 
+                { role: "model", parts: [{ text: "Chào bạn! Tôi là Hướng dẫn viên AI của Thảo Cầm Viên. Bạn muốn hỏi về các loài động vật, giờ mở cửa hay Tour Đêm?" }] } 
+            ];
+           
+            function showPage(pageId) {
+                pageHome.classList.add('hidden');
+                pageProductDetail.classList.add('hidden');
+                const pageNewsDetail = document.getElementById('page-news-detail'); 
+                if(pageNewsDetail) pageNewsDetail.classList.add('hidden'); 
+
+                if (pageId === 'home') {
+                    pageHome.classList.remove('hidden');
+                    location.hash = '';
+                } else if (pageId === 'product') {
+                    pageProductDetail.classList.remove('hidden');
+                } else if (pageId === 'news') { 
+                    if(pageNewsDetail) pageNewsDetail.classList.remove('hidden');
+                }
+                window.scrollTo(0, 0);
+            }
+
+            function showProductDetail(productId) {
+    const product = window.attractions.find(p => p.id === productId);
+if (!product) return; 
+
+    const langMap = window.currentLangMap ||
+{};
+
+    detailImg.src = product.image;
+    detailImg.alt = langMap[product.nameKey] || 'Chi tiết khu vực';
+    detailName.textContent = langMap[product.nameKey] || 'Tên Khu Vực'; 
+    detailDesc.textContent = langMap[product.descKey] || 'Mô tả chi tiết khu vực...';
+
+    
+    
+    if (product.mapEmbedUrl) {
+        mapIframe.src = product.mapEmbedUrl;
+        mapContainer.style.display = 'block';
+} else {
+        mapContainer.style.display = 'none';
+}
+   
+    showPage('product');
+    location.hash = `#product-${product.id}`;
+
+   
+    document.querySelector('#back-to-home').innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg> 
+        ${langMap['hi1'] || 'Quay lại danh sách'}
+    `;
+    
+    
+    const mapTitleEl = document.querySelector('#map-container h3'); 
+    if (mapTitleEl) mapTitleEl.textContent = langMap['detail_map_title'] || 'Vị trí trên bản đồ';
+    
+}
+
+
+function showNewsDetail(newsId) {
+    const news = window.newsData.find(n => n.id === newsId);
+    if (!news) return;
+
+    const langMap = window.currentLangMap || {};
+
+    
+    newsDetailImg.src = news.image;
+    newsDetailImg.alt = langMap[news.nameKey] || 'Tiêu đề tin tức';
+    newsDetailName.textContent = langMap[news.nameKey] || 'Tiêu đề tin tức';
+    
+    newsDetailContent.textContent = langMap[news.fullContentKey] || 'Nội dung đang được cập nhật...';
+
+    newsDetailDate.innerHTML = `
+        <div class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 text-orange-500">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+            </svg>
+            <span>${news.date}</span>
+        </div>
+    `;
+
+   
+    newsDetailGallery.innerHTML = '';
+    if (news.gallery && news.gallery.length > 0) {
+        news.gallery.forEach(image => {
+            const imgElement = document.createElement('img');
+            imgElement.src = image.src;
+            imgElement.alt = image.alt;
+            imgElement.className = 'w-full h-48 object-cover rounded-lg shadow-md hover:scale-105 transition-transform cursor-pointer';
+            newsDetailGallery.appendChild(imgElement);
+     
+       });
+    }
+    
+    showPage('news');
+    location.hash = `#news-${news.id}`;
+
+    
+    document.querySelector('#back-to-home-news').innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg> 
+        ${langMap['hi2'] || 'Quay lại Trang chủ'}
+    `;
+    
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const btnVI = document.getElementById('lang-vi');
+  const btnEN = document.getElementById('lang-en');
+  const chatArea = document.getElementById('chat-area');
+  
+  let allLangMaps = null; 
+  let currentLang = localStorage.getItem('lang') || 'vi'; 
+
+  
+  async function loadLangFiles() {
+    try {
+      const [viResp, enResp] = await Promise.all([
+        fetch('/lang_vi.json'), 
+        fetch('/lang_en.json')
+      ]);
+      const vi = await viResp.json();
+      const en = await enResp.json();
+      return { vi, en };
+    } catch (error) {
+      console.error("Không thể tải tệp ngôn ngữ:", error);
+      return { vi: {}, en: {} };
+    }
+  }
+
+  
+  function applyTranslations(lang) {
+    if (!allLangMaps) return; 
+
+    const map = allLangMaps[lang];
+    if (!map) return;
+
+    
+    window.currentLangMap = map;
+
+    
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (map[key]) el.textContent = map[key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (map[key]) el.placeholder = map[key];
+    });
+    document.querySelectorAll('[data-i18n-title]').forEach(el => {
+      const key = el.getAttribute('data-i18n-title');
+      if (map[key]) el.title = map[key];
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+      const key = el.getAttribute('data-i18n-aria');
+      if (map[key]) el.setAttribute('aria-label', map[key]);
+    });
+
+    
+    document.querySelectorAll('#attractions .product-link').forEach(card => {
+        const productId = card.dataset.productId;
+        const product = window.attractions.find(p => p.id == productId);
+        if (product) {
+            const h3 = card.querySelector('h3');
+            const p = card.querySelector('p');
+            if (h3 && map[product.nameKey]) h3.textContent = map[product.nameKey];
+            if (p && map[product.descKey]) p.textContent = map[product.descKey];
+        }
+    });
+    document.querySelectorAll('#news-section .news-link').forEach(card => {
+        const newsId = card.dataset.newsId;
+        const news = window.newsData.find(n => n.id == newsId);
+        if (news) {
+            const h = card.querySelector('h2, h3');
+            const p = card.querySelector('p');
+            if (h && map[news.nameKey]) h.textContent = map[news.nameKey];
+            if (p && news.excerptKey && map[news.excerptKey]) p.textContent = map[news.excerptKey];
+        }
+    });
+    
+   
+    if (lang === 'vi') {
+        btnVI.classList.add('bg-green-200');
+        btnVI.classList.remove('bg-green-100');
+        btnEN.classList.add('bg-green-100');
+        btnEN.classList.remove('bg-green-200');
+    } else {
+        btnEN.classList.add('bg-green-200');
+        btnEN.classList.remove('bg-green-100');
+        btnVI.classList.add('bg-green-100');
+        btnVI.classList.remove('bg-green-200');
+    }
+
+    
+    resetChatbot(lang, map);
+
+   
+    const hash = window.location.hash;
+    if (hash.startsWith('#product-')) {
+        showProductDetail(parseInt(hash.split('-')[1]));
+    } else if (hash.startsWith('#news-')) {
+        showNewsDetail(parseInt(hash.split('-')[1]));
+    }
+  }
+
+  
+  function resetChatbot(lang, map) {
+    
+    const welcomeText = map['chatbot_welcome'] || "Hello! How can I help you?";
+
+   
+    chatHistory = [
+        { 
+            role: "model", 
+            parts: [{ text: welcomeText }] 
+        }
+    ];
+
+   
+    const typingIndicator = document.getElementById('typing-indicator');
+    chatArea.innerHTML = ''; 
+    chatArea.appendChild(typingIndicator); 
+
+   
+    const messageElement = document.createElement('div');
+    const bubble = document.createElement('div');
+    bubble.innerText = welcomeText;
+    bubble.className = 'p-3 rounded-lg max-w-[85%] shadow-sm whitespace-pre-wrap bg-slate-200 text-slate-800';
+    messageElement.className = 'flex justify-start';
+    messageElement.appendChild(bubble);
+    chatArea.insertBefore(messageElement, typingIndicator);
+    
+    
+    const suggestionButtons = document.querySelectorAll('#suggestion-chips .suggestion-btn');
+    const suggestionKeys = ['suggestion_tour', 'suggestion_explore', 'suggestion_donate'];
+    suggestionButtons.forEach((btn, index) => {
+        const key = suggestionKeys[index];
+        if (map[key]) {
+            btn.textContent = map[key];
+        }
+    });
+  }
+
+  
+  function setLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+    applyTranslations(lang);
+  }
+
+  
+  async function init() {
+    allLangMaps = await loadLangFiles();
+    
+    
+    applyTranslations(currentLang);
+
+    
+    btnVI.addEventListener('click', () => setLanguage('vi'));
+    btnEN.addEventListener('click', () => setLanguage('en'));
+  }
+
+  init();
+});
+</script>
+
+</body>
+</html>
